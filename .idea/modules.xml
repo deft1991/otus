@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/homework6/homework6.iml" filepath="$PROJECT_DIR$/homework6/homework6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/homework6_main.iml" filepath="$PROJECT_DIR$/.idea/modules/homework6_main.iml" group="homework6" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/homework6_test.iml" filepath="$PROJECT_DIR$/.idea/modules/homework6_test.iml" group="homework6" />
+      <module fileurl="file://$PROJECT_DIR$/otus.iml" filepath="$PROJECT_DIR$/otus.iml" />
+    </modules>
+  </component>
+</project>
