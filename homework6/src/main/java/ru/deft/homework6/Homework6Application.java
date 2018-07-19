@@ -45,27 +45,27 @@ public class Homework6Application {
 	}});
 	authorDao.insert(new Author() {{
 	  setId(1);
-	  setName("This is author 1");
+	  setName("This is authors 1");
 	}});
 	authorDao.insert(new Author() {{
 	  setId(2);
-	  setName("This is author 2");
+	  setName("This is authors 2");
 	}});
 	authorDao.insert(new Author() {{
 	  setId(3);
-	  setName("This is author 3");
+	  setName("This is authors 3");
 	}});
 	genreDao.insert(new Genre() {{
 	  setId(1);
-	  setName("This is genre 1");
+	  setName("This is genres 1");
 	}});
 	genreDao.insert(new Genre() {{
 	  setId(2);
-	  setName("This is genre 2");
+	  setName("This is genres 2");
 	}});
 	genreDao.insert(new Genre() {{
 	  setId(3);
-	  setName("This is genre 3");
+	  setName("This is genres 3");
 	}});
 
 	jdbc.execute("INSERT into book_to_author values (1,1,2)");
@@ -75,6 +75,14 @@ public class Homework6Application {
 	jdbc.execute("INSERT into book_to_author values (5,2,3)");
 	jdbc.execute("INSERT into book_to_author values (6,3,2)");
 	jdbc.execute("INSERT into book_to_author values (7,1,3)");
+
+	jdbc.execute("INSERT into book_to_genre values (1,1,2)");
+	jdbc.execute("INSERT into book_to_genre values (2,2,2)");
+	jdbc.execute("INSERT into book_to_genre values (3,3,1)");
+	jdbc.execute("INSERT into book_to_genre values (4,1,1)");
+	jdbc.execute("INSERT into book_to_genre values (5,2,3)");
+	jdbc.execute("INSERT into book_to_genre values (6,3,2)");
+	jdbc.execute("INSERT into book_to_genre values (7,1,3)");
 
 	bookDao.getById(1);
 	System.out.println(bookDao.count());

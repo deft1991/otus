@@ -26,12 +26,9 @@ repositories {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-jdbc')
-//    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
     runtime('mysql:mysql-connector-java')
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
     compileOnly('org.projectlombok:lombok:1.16.22')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
-
-
 }
