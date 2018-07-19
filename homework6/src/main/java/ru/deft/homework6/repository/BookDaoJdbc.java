@@ -3,7 +3,9 @@ package ru.deft.homework6.repository;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import ru.deft.homework6.domain.Author;
 import ru.deft.homework6.domain.Book;
+import ru.deft.homework6.domain.Genre;
 import ru.deft.homework6.repository.dao.BookDao;
 
 import java.sql.ResultSet;
@@ -30,7 +32,14 @@ public class BookDaoJdbc implements BookDao {
 
   @Override
   public Book getById(int id) {
-	return jdbc.queryForObject("select * from book where id = ?", new Object[]{id}, new BookMapper());
+	Book book = jdbc.queryForObject("select * from book where id = ?", new Object[]{id}, new BookMapper());
+	jdbc.queryForList("select * from author a join book_to_author ba on a.ID = ba.AUTHOR_ID  where ba.BOOK_ID = ?", new Object[]{id}, new RowMapper(){
+	  @Override
+	  public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		return null;
+	  }
+	});
+	return book;
   }
 
   @Override
@@ -49,7 +58,12 @@ public class BookDaoJdbc implements BookDao {
 	public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
 	  int id = rs.getInt("id");
 	  String name = rs.getString("name");
-	  return new Book(id, name);
+	  Book book = new Book(id, name);
+	  Author author = new Author(rs.getInt("id"), rs.getString("name"));
+	  Genre genre = new Genre(rs.getInt("id"), rs.getString("name"));
+	  book.setAuthor(author);
+	  book.setGenre(genre);
+	  return book;
 	}
   }
 }

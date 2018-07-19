@@ -1,6 +1,6 @@
 package ru.deft.homework6.repository.dao;
 
-import ru.deft.homework6.domain.Book;
+import ru.deft.homework6.domain.Genre;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ public interface GenreDao {
 
   int count();
 
-  Book getById(int id);
+  Genre getById(int id);
 
-  List<Book> findAll();
+  List<Genre> findAll();
 
-  void insert(Book book);
+  void insert(Genre genre);
 }

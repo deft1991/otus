@@ -2,6 +2,7 @@ package ru.deft.homework6.repository;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import ru.deft.homework6.domain.Author;
 import ru.deft.homework6.repository.dao.AuthorDao;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @author Golitsyn Sergey (sgolitsyn)
  * @since 7/18/2018
  */
+@Repository
 public class AuthorDaoJdbc implements AuthorDao {
 
   private final JdbcOperations jdbc;

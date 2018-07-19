@@ -1,6 +1,7 @@
 package ru.deft.homework6.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Setter;
 //@Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Author {
 
   private int id;
