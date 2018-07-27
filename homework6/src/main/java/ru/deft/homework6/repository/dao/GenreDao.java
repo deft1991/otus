@@ -3,6 +3,7 @@ package ru.deft.homework6.repository.dao;
 import ru.deft.homework6.domain.Genre;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Golitsyn Sergey (sgolitsyn)
@@ -12,7 +13,7 @@ public interface GenreDao {
 
   int count();
 
-  Genre getById(int id);
+  Genre getById(UUID id);
 
   List<Genre> findAll();
 

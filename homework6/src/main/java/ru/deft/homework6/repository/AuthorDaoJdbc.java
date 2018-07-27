@@ -9,6 +9,7 @@ import ru.deft.homework6.repository.dao.AuthorDao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Golitsyn Sergey (sgolitsyn)
@@ -29,7 +30,7 @@ public class AuthorDaoJdbc implements AuthorDao {
   }
 
   @Override
-  public Author getById(int id) {
+  public Author getById(UUID id) {
 	return jdbc.queryForObject("select * from author where id = ?", new Object[]{id}, new AuthorDaoJdbc.AuthorMapper());
   }
 
@@ -47,7 +48,7 @@ public class AuthorDaoJdbc implements AuthorDao {
 
 	@Override
 	public Author mapRow(ResultSet rs, int rowNum) throws SQLException {
-	  int id = rs.getInt("id");
+	  UUID id = UUID.fromString(rs.getString("id"));
 	  String name = rs.getString("name");
 	  return new Author(id, name);
 	}
