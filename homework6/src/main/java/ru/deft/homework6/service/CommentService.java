@@ -1,7 +1,9 @@
 package ru.deft.homework6.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.deft.homework6.repository.CommentaryDaoJdbc;
 
 /**
  * @author Golitsyn Sergey (sgolitsyn)
@@ -9,5 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CommentService {
+  private final CommentaryDaoJdbc commentaryDaoJdbc;
+
+  public void addComment(String book, String comment) {
+    commentaryDaoJdbc.insert(comment, book);
+  }
+
+  public void readComment(String book) {
+    commentaryDaoJdbc.findAllComments(book).forEach(System.out::println);
+  }
 }

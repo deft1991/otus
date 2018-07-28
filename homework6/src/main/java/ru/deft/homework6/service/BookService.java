@@ -28,8 +28,16 @@ public class BookService {
 	bookDaoJdbc.findAll().forEach(System.out::println);
   }
 
-  public Book getById(UUID id) {
+  public Book getById(String id) {
 	return bookDaoJdbc.getById(id);
+  }
+
+  public void addBook(String bookName) {
+	this.addBook(bookName, null, null);
+  }
+
+  public void addBook(String bookName, String authorId) {
+	this.addBook(bookName, authorId, null);
   }
 
   public void addBook(String bookName, String authorId, String genreId) {
@@ -38,5 +46,9 @@ public class BookService {
 
   public void booksCount() {
 	System.out.println(bookDaoJdbc.count());
+  }
+
+  public void printOne(String id) {
+	System.out.println(bookDaoJdbc.getById(id));
   }
 }

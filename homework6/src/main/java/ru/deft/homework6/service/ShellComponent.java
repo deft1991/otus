@@ -14,10 +14,36 @@ public class ShellComponent {
   private final BookService bookService;
   private final AuthorService authorService;
   private final GenreService genreService;
+  private final CommentService commentService;
 
   @ShellMethod("Print all books")
-  public void printAllBooks() {
+  public void printBooks() {
 	bookService.printBooks();
+  }
+
+  @ShellMethod("Print all authors")
+  public void printAuthors() {
+	authorService.printAuthors();
+  }
+
+  @ShellMethod("Print all genres")
+  public void printGenres() {
+	genreService.printGenres();
+  }
+
+  @ShellMethod("Print book by ID")
+  public void printBookById(@ShellOption String id) {
+	bookService.printOne(id);
+  }
+
+  @ShellMethod("Print author by ID")
+  public void printAuthorById(@ShellOption String id) {
+	authorService.printAuthorById(id);
+  }
+
+  @ShellMethod("Print genre by ID")
+  public void printGenreById(@ShellOption String id) {
+	genreService.printGenreById(id);
   }
 
   @ShellMethod("Print books count")
@@ -25,22 +51,40 @@ public class ShellComponent {
 	bookService.booksCount();
   }
 
-  @ShellMethod("Print all authors")
-  public void printAllAuthors() {
-	authorService.printAuthors();
+  @ShellMethod("Add book")
+  public void addBook(@ShellOption String bookName) {
+	bookService.addBook(bookName);
   }
 
-  @ShellMethod("Print all genres")
-  public void printAllGenres() {
-	genreService.printGenres();
+  @ShellMethod("Add book")
+  public void addBookWithAuthor(@ShellOption String bookName,
+								@ShellOption String authorId) {
+	bookService.addBook(bookName, authorId);
   }
 
-
-
-  @ShellMethod("Print all books")
-  public void addBook(@ShellOption String bookName,
-					  @ShellOption String authorId,
-					  @ShellOption String genreId) {
+  @ShellMethod("Add book")
+  public void addFullBook(@ShellOption String bookName,
+						  @ShellOption String authorId,
+						  @ShellOption String genreId) {
 	bookService.addBook(bookName, authorId, genreId);
+  }
+
+  @ShellMethod("Add author")
+  public void addAuthor(@ShellOption String name) {
+	authorService.addAuthor(name);
+  }
+
+  @ShellMethod("Add genre")
+  public void addGenre(@ShellOption String name) {
+	genreService.addAuthor(name);
+  }
+
+  @ShellMethod("Add book comment")
+  public void addComment(@ShellOption String book, @ShellOption String comment) {
+	commentService.addComment(book, comment);
+  }
+  @ShellMethod("Read book comment")
+  public void readComment(@ShellOption String book) {
+	commentService.readComment(book);
   }
 }

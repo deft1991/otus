@@ -13,9 +13,9 @@ public interface AuthorDao {
 
   int count();
 
-  Author getById(UUID id);
+  Author getById(String id);
 
   List<Author> findAll();
 
-  void insert(Author author);
+  void insert(String name);
 }

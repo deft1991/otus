@@ -23,4 +23,12 @@ public class Genre extends Identifiable{
 	super(id);
 	this.name = name;
   }
+
+  @Override
+  public String toString() {
+	return "Genre{" +
+			"id='" + super.getId() + '\'' +
+			"name='" + name + '\'' +
+			'}';
+  }
 }

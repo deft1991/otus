@@ -23,4 +23,12 @@ public class Author extends Identifiable {
 	super(id);
 	this.name = name;
   }
+
+  @Override
+  public String toString() {
+	return "Author{" +
+			"id='" + super.getId() + '\'' +
+			"name='" + name + '\'' +
+			'}';
+  }
 }

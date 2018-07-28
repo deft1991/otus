@@ -19,6 +19,7 @@ import java.util.UUID;
  */
 @Repository
 @RequiredArgsConstructor
+@SuppressWarnings("SqlResolve")
 public class GenreDaoJdbc implements GenreDao {
 
   private final NamedParameterJdbcOperations namedJdbc;
@@ -29,7 +30,7 @@ public class GenreDaoJdbc implements GenreDao {
   }
 
   @Override
-  public Genre getById(UUID id) {
+  public Genre getById(String id) {
 	final HashMap<String, Object> params = new HashMap<>();
 	params.put("id", id);
 	return namedJdbc.queryForObject("select * from genre where id = :id", params, new GenreDaoJdbc.GenreMapper());
@@ -41,10 +42,10 @@ public class GenreDaoJdbc implements GenreDao {
   }
 
   @Override
-  public void insert(Genre genre) {
+  public void insert(String name) {
 	final HashMap<String, Object> params = new HashMap<>();
-	params.put("id", genre.getId().toString());
-	params.put("name", genre.getName());
+	params.put("id", UUID.randomUUID().toString());
+	params.put("name", name);
 	namedJdbc.update("insert into genre (id, `name`) values (:id, :name)", params);
   }
 
