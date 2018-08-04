@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import java.util.UUID;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 /**
  * @author Golitsyn Sergey (sgolitsyn)
@@ -15,12 +16,14 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Genre extends Identifiable{
+public class Genre extends Identifiable {
 
   private String name;
 
-  public Genre(UUID id, String name) {
-	super(id);
+  @ManyToMany(mappedBy = "genres")
+  private List<Book> books;
+
+  public Genre(String name) {
 	this.name = name;
   }
 

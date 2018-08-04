@@ -3,7 +3,7 @@ package ru.deft.homework6.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.deft.homework6.repository.GenreDaoJdbc;
+import ru.deft.homework6.repository.GenreRepositoryJpa;
 
 /**
  * @author Golitsyn Sergey (sgolitsyn)
@@ -14,7 +14,7 @@ import ru.deft.homework6.repository.GenreDaoJdbc;
 @RequiredArgsConstructor
 public class GenreService {
 
-  private final GenreDaoJdbc genreDaoJdbc;
+  private final GenreRepositoryJpa genreDaoJdbc;
 
   public void printGenres() {
 	genreDaoJdbc.findAll().forEach(System.out::println);
@@ -24,7 +24,7 @@ public class GenreService {
 	System.out.println(genreDaoJdbc.getById(id));
   }
 
-  public void addAuthor(String name) {
-	genreDaoJdbc.insert(name);
+  public void addGenre(String name) {
+	System.out.println(genreDaoJdbc.insert(name));
   }
 }
