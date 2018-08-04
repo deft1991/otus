@@ -3,7 +3,11 @@ package ru.deft.homework6.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.deft.homework6.repository.CommentaryRepositoryJpa;
+import ru.deft.homework6.domain.Commentary;
+import ru.deft.homework6.repository.BookRepository;
+import ru.deft.homework6.repository.CommentaryRepository;
+
+import java.util.UUID;
 
 /**
  * @author Golitsyn Sergey (sgolitsyn)
@@ -13,13 +17,16 @@ import ru.deft.homework6.repository.CommentaryRepositoryJpa;
 @Transactional
 @RequiredArgsConstructor
 public class CommentService {
-  private final CommentaryRepositoryJpa commentaryDaoJdbc;
+  private final CommentaryRepository commentaryRepository;
+  private final BookRepository bookRepository;
 
-  public void addComment(String book, String comment) {
-	commentaryDaoJdbc.insert(comment, book);
+  public void addComment(String bookId, String comment) {
+	Commentary commentary = new Commentary(comment);
+	commentary.setBook(bookRepository.findById(UUID.fromString(bookId)).orElseThrow());
+	commentaryRepository.save(commentary);
   }
 
-  public void readComment(String book) {
-	commentaryDaoJdbc.findAllComments(book).forEach(System.out::println);
+  public void readComment(String bookId) {
+	commentaryRepository.findAllByBookId(UUID.fromString(bookId)).forEach(System.out::println);
   }
 }
