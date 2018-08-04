@@ -4,21 +4,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import java.util.UUID;
+
 /**
  * @author Golitsyn Sergey (sgolitsyn)
  * @since 7/18/2018
  */
-//@Entity
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Genre {
+public class Genre extends Identifiable{
 
-  private int id;
   private String name;
 
-  public Genre(int id, String name) {
-	this.id = id;
+  public Genre(UUID id, String name) {
+	super(id);
 	this.name = name;
+  }
+
+  @Override
+  public String toString() {
+	return "Genre{" +
+			"id='" + super.getId() + '\'' +
+			"name='" + name + '\'' +
+			'}';
   }
 }

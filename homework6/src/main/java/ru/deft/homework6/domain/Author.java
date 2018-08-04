@@ -4,21 +4,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import java.util.UUID;
+
 /**
  * @author Golitsyn Sergey (sgolitsyn)
  * @since 7/18/2018
  */
-//@Entity
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Author {
+public class Author extends Identifiable {
 
-  private int id;
   private String name;
 
-  public Author(int id, String name) {
-	this.id = id;
+  public Author(UUID id, String name) {
+	super(id);
 	this.name = name;
+  }
+
+  @Override
+  public String toString() {
+	return "Author{" +
+			"id='" + super.getId() + '\'' +
+			"name='" + name + '\'' +
+			'}';
   }
 }
