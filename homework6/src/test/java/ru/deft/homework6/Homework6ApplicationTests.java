@@ -5,18 +5,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.deft.homework6.repository.BookDaoJdbc;
-import ru.deft.homework6.repository.dao.BookDao;
+import ru.deft.homework6.repository.BookRepositoryJpa;
+import ru.deft.homework6.repository.dao.BookRepository;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -31,15 +28,15 @@ public class Homework6ApplicationTests {
 
   @Before
   public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
+	MockitoAnnotations.initMocks(this);
   }
 
   @Test
   public void getBookCountTest() {
-    when(jdbc.queryForObject(anyString(),eq(Integer.class),anyObject())).thenReturn(1);
-    BookDao bookDao = new BookDaoJdbc(jdbc, namedJdbc);
-    bookDao.count();
-    assertEquals(1,bookDao.count());
+	when(jdbc.queryForObject(anyString(), eq(Integer.class), anyObject())).thenReturn(1);
+	BookRepository bookDao = new BookRepositoryJpa(jdbc, namedJdbc);
+	bookDao.count();
+	assertEquals(1, bookDao.count());
   }
 
 

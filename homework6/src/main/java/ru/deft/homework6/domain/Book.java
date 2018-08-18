@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -14,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -28,21 +28,20 @@ import java.util.stream.Collectors;
 public class Book extends Identifiable {
 
   private String name;
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinTable(name = "BOOK_TO_AUTHOR",
 		  joinColumns = @JoinColumn(name = "BOOK_ID"),
 		  inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
-  private List<Author> authors;
-  @ManyToMany(fetch = FetchType.LAZY)
+  private List<Author> authors = new ArrayList<>();
+  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinTable(name = "BOOK_TO_GENRE",
 		  joinColumns = @JoinColumn(name = "BOOK_ID"),
 		  inverseJoinColumns = @JoinColumn(name = "GENRE_ID"))
-  private List<Genre> genres;
+  private List<Genre> genres = new ArrayList<>();
   @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
   private List<Commentary> commentaries;
 
-  public Book(UUID id, String name) {
-	super(id);
+  public Book(String name) {
 	this.name = name;
   }
 

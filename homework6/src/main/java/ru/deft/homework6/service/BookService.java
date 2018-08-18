@@ -4,10 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.deft.homework6.domain.Book;
-import ru.deft.homework6.repository.BookDaoJdbc;
+import ru.deft.homework6.repository.BookRepositoryJpa;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Golitsyn Sergey (sgolitsyn)
@@ -18,13 +17,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BookService {
 
-  private final BookDaoJdbc bookDaoJdbc;
+  private final BookRepositoryJpa bookDaoJdbc;
 
   public List<Book> findAll() {
 	return bookDaoJdbc.findAll();
   }
 
-  public void printBooks(){
+  public void printBooks() {
 	bookDaoJdbc.findAll().forEach(System.out::println);
   }
 

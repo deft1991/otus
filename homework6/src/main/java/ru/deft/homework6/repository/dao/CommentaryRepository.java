@@ -9,12 +9,13 @@ import java.util.UUID;
  * @author Golitsyn Sergey (sgolitsyn)
  * @since 7/27/2018
  */
-public interface CommentaryDao {
+public interface CommentaryRepository {
 
   Commentary getById(UUID id);
 
   List<Commentary> findAll();
 
   void insert(String commentary, String bookId);
+
   List<Commentary> findAllComments(String bookId);
 }

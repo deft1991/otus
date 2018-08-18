@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.deft.homework6.domain.Author;
-import ru.deft.homework6.domain.Book;
-import ru.deft.homework6.repository.AuthorDaoJdbc;
+import ru.deft.homework6.repository.AuthorRepositoryJpa;
 
 import java.util.List;
 
@@ -18,21 +17,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthorService {
 
-  private final AuthorDaoJdbc authorDaoJdbc;
+  private final AuthorRepositoryJpa authorDaoJdbc;
 
   public List<Author> findAll() {
-    return authorDaoJdbc.findAll();
+	return authorDaoJdbc.findAll();
   }
 
-  public void printAuthors(){
-    authorDaoJdbc.findAll().forEach(System.out::println);
+  public void printAuthors() {
+	authorDaoJdbc.findAll().forEach(System.out::println);
   }
 
   public void printAuthorById(String id) {
-    System.out.println(authorDaoJdbc.getById(id));
+	System.out.println(authorDaoJdbc.getById(id));
   }
 
   public void addAuthor(String name) {
-    authorDaoJdbc.insert(name);
+	System.out.println(authorDaoJdbc.insert(name));
+  }
+
+  public void count() {
+	System.out.println(authorDaoJdbc.count());
   }
 }

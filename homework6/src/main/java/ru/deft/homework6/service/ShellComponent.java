@@ -26,6 +26,11 @@ public class ShellComponent {
 	authorService.printAuthors();
   }
 
+  @ShellMethod("Print count authors")
+  public void countAuthors() {
+	authorService.count();
+  }
+
   @ShellMethod("Print all genres")
   public void printGenres() {
 	genreService.printGenres();
@@ -76,13 +81,14 @@ public class ShellComponent {
 
   @ShellMethod("Add genre")
   public void addGenre(@ShellOption String name) {
-	genreService.addAuthor(name);
+	genreService.addGenre(name);
   }
 
   @ShellMethod("Add book comment")
   public void addComment(@ShellOption String book, @ShellOption String comment) {
 	commentService.addComment(book, comment);
   }
+
   @ShellMethod("Read book comment")
   public void readComment(@ShellOption String book) {
 	commentService.readComment(book);
