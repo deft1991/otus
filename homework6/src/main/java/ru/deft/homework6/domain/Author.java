@@ -5,7 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import java.util.UUID;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author Golitsyn Sergey (sgolitsyn)
@@ -17,10 +19,13 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Author extends Identifiable {
 
+  @NotNull
   private String name;
 
-  public Author(UUID id, String name) {
-	super(id);
+  @ManyToMany(mappedBy = "authors")
+  private List<Book> books;
+
+  public Author(String name) {
 	this.name = name;
   }
 

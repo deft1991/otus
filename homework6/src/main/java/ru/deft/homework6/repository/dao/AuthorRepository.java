@@ -3,13 +3,12 @@ package ru.deft.homework6.repository.dao;
 import ru.deft.homework6.domain.Author;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Golitsyn Sergey (sgolitsyn)
  * @since 7/18/2018
  */
-public interface AuthorDao {
+public interface AuthorRepository {
 
   int count();
 
@@ -17,5 +16,5 @@ public interface AuthorDao {
 
   List<Author> findAll();
 
-  void insert(String name);
+  Author insert(String name);
 }
