@@ -35,5 +35,7 @@ dependencies {
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
     compile("org.springframework.shell:spring-shell-starter:2.0.1.RELEASE")
     compile("org.apache.commons:commons-lang3:3.7")
+    compile("org.springframework.data:spring-data-jpa")
+
 
 }
