@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/homework6.iml" filepath="$PROJECT_DIR$/.idea/modules/homework6.iml" />
       <module fileurl="file://$PROJECT_DIR$/homework6/homework6.iml" filepath="$PROJECT_DIR$/homework6/homework6.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/homework6_main.iml" filepath="$PROJECT_DIR$/.idea/modules/homework6_main.iml" group="homework6" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/homework6_test.iml" filepath="$PROJECT_DIR$/.idea/modules/homework6_test.iml" group="homework6" />
+      <module fileurl="file://$PROJECT_DIR$/otus_2019_06/hw01-maven/hw01maven.iml" filepath="$PROJECT_DIR$/otus_2019_06/hw01-maven/hw01maven.iml" />
       <module fileurl="file://$PROJECT_DIR$/otus.iml" filepath="$PROJECT_DIR$/otus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/otus_2019_06/otus_2019_06.iml" filepath="$PROJECT_DIR$/otus_2019_06/otus_2019_06.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ru.deft-homework6.iml" filepath="$PROJECT_DIR$/.idea/modules/ru.deft-homework6.iml" group="homework6" />
     </modules>
   </component>
 </project>
