@@ -13,8 +13,8 @@
     <bytecodeTargetLevel>
       <module name="homework6_main" target="1.10" />
       <module name="homework6_test" target="1.10" />
-      <module name="hw01maven" target="1.5" />
-      <module name="otus_2019_06" target="1.5" />
+      <module name="hw01maven" target="11" />
+      <module name="otus_2019_06" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
