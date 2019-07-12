@@ -11,6 +11,8 @@
 
     <modules>
         <module>hw01-maven</module>
+        <module>hw02-maven</module>
+        <module>hw03-maven</module>
     </modules>
 
     <description>Code examples</description>
@@ -23,8 +25,8 @@
 
 
     <properties>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
         <guava.version>28.0-jre</guava.version>
     </properties>
 
