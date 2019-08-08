@@ -50,7 +50,7 @@ public class Main {
         try {
             Object invoke = methodTest.invoke(obj);
             System.out.println(String.format("Test method = %s result = %s", methodTest.getName(), invoke.toString()));
-        } catch (IllegalArgumentException |IllegalAccessException | InvocationTargetException e) {
+        } catch (Exception e) {
             err.add(e.getLocalizedMessage());
         }
     }
@@ -59,7 +59,7 @@ public class Main {
         before.forEach(methodBefore -> {
             try {
                 methodBefore.invoke(obj);
-            } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+            } catch (Exception e) {
                 err.add(e.getLocalizedMessage());
             }
         });
