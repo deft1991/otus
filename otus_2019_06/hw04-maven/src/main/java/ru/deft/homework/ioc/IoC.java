@@ -8,14 +8,17 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class IoC {
 
     private static final String LOG_MSG = "Execute method %s with params {%s}";
-    private static List<Method> logableMethods = new ArrayList<>();
+    private static Set<Method> logableMethods = new HashSet<>();
+    private static Set<Method> unLogableMethods = new HashSet<>();
 
     public static Object createProxyClass(Class clazz) {
         InvocationHandler printInvocationHandler = new MyLogInvocationHandler(clazz);
@@ -35,12 +38,16 @@ public class IoC {
             if (logableMethods.contains(method)) {
                 printMethod(method, args);
                 return method.invoke(clazz.newInstance(), args);
+            } else if (unLogableMethods.contains(method)){
+                return method.invoke(clazz.newInstance(), args);
             }
             Method proxyMethod = clazz.getDeclaredMethod(method.getName(), method.getParameterTypes());
             Log annotation = proxyMethod.getAnnotation(Log.class);
             if (annotation != null) {
                 logableMethods.add(method);
                 printMethod(method, args);
+            } else {
+                unLogableMethods.add(method);
             }
             return method.invoke(clazz.newInstance(), args);
         }
