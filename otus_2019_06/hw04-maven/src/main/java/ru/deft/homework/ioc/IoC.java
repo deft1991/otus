@@ -6,10 +6,8 @@ import ru.deft.homework.interfaces.PrintInterface;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,12 +16,22 @@ public class IoC {
 
     private static final String LOG_MSG = "Execute method %s with params {%s}";
     private static Set<Method> logableMethods = new HashSet<>();
-    private static Set<Method> unLogableMethods = new HashSet<>();
 
     public static Object createProxyClass(Class clazz) {
         InvocationHandler printInvocationHandler = new MyLogInvocationHandler(clazz);
+        fillLogableMethodSet(clazz);
         return Proxy.newProxyInstance(IoC.class.getClassLoader(), new Class[] {PrintInterface.class}, printInvocationHandler);
 
+    }
+
+    private static void fillLogableMethodSet(Class clazz) {
+        final Method[] declaredMethods = clazz.getDeclaredMethods();
+        for (Method declaredMethod : declaredMethods) {
+            Log annotation = declaredMethod.getAnnotation(Log.class);
+            if (annotation != null) {
+                logableMethods.add(declaredMethod);
+            }
+        }
     }
 
     private static class MyLogInvocationHandler implements InvocationHandler {
@@ -35,21 +43,12 @@ public class IoC {
         }
 
         @Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            if (logableMethods.contains(method)) {
+            if (logableMethods.contains(clazz.getDeclaredMethod(method.getName(), method.getParameterTypes()))) {
                 printMethod(method, args);
                 return method.invoke(clazz.newInstance(), args);
-            } else if (unLogableMethods.contains(method)){
-                return method.invoke(clazz.newInstance(), args);
-            }
-            Method proxyMethod = clazz.getDeclaredMethod(method.getName(), method.getParameterTypes());
-            Log annotation = proxyMethod.getAnnotation(Log.class);
-            if (annotation != null) {
-                logableMethods.add(method);
-                printMethod(method, args);
             } else {
-                unLogableMethods.add(method);
+                return method.invoke(clazz.newInstance(), args);
             }
-            return method.invoke(clazz.newInstance(), args);
         }
 
         private void printMethod(Method method, Object[] args) {
