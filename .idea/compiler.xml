@@ -8,8 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="hw02maven" />
-        <module name="hw04-maven" />
+        <module name="hw05maven" />
         <module name="hw03maven" />
+        <module name="hw04-maven" />
         <module name="hw01maven" />
       </profile>
     </annotationProcessing>
@@ -20,6 +21,7 @@
       <module name="hw02maven" target="8" />
       <module name="hw03maven" target="8" />
       <module name="hw04-maven" target="8" />
+      <module name="hw05maven" target="8" />
       <module name="otus_2019_06" target="8" />
     </bytecodeTargetLevel>
   </component>
