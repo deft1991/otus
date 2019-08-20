@@ -16,12 +16,18 @@ public class Main {
 
         PrintInterface hello = (PrintInterface) IoC.createProxyClass(PrintHello.class);
         hello.print();
+        hello.print();
+        hello.print();
+        hello.print();
 
         PrintInterface bye = (PrintInterface) IoC.createProxyClass(PrintBye.class);
         bye.print();
+        bye.print();
 
         hello.print("Josh");
+        hello.print("Joshi");
         bye.print("Danny");
+        bye.print("Dannys");
 
     }
 
