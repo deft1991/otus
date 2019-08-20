@@ -1,6 +1,8 @@
 package ru.deft.homework;
 
 import ru.deft.homework.actions.CashMachineActions;
+import ru.deft.homework.constants.BanknoteDenomination;
+import ru.deft.homework.errors.CashMachineException;
 import ru.deft.homework.impl.RubATM;
 import ru.deft.homework.impl.UsdATM;
 
@@ -8,23 +10,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static ru.deft.homework.Constants.CHOOSE_AN_OPERATION;
-import static ru.deft.homework.Constants.CHOOSE_CURRENCY;
-import static ru.deft.homework.Constants.COMMAND_TO_REASKING;
-import static ru.deft.homework.Constants.CURRENCY;
-import static ru.deft.homework.Constants.DEPOSIT_CASH;
-import static ru.deft.homework.Constants.ENTER_DENOMINATION;
-import static ru.deft.homework.Constants.ENTER_NUMBER_OF_BILLS;
-import static ru.deft.homework.Constants.ENTER_NUMBER_OF_OPERATION;
-import static ru.deft.homework.Constants.ENTER_THE_AMOUNT;
-import static ru.deft.homework.Constants.EXIT;
-import static ru.deft.homework.Constants.FIND_OUT_THE_BALANCE;
-import static ru.deft.homework.Constants.HAVE_A_NICE_DAY_BYE;
-import static ru.deft.homework.Constants.WELCOME;
-import static ru.deft.homework.Constants.WITHDRAW_CASH;
+import static ru.deft.homework.constants.Constants.CHOOSE_AN_OPERATION;
+import static ru.deft.homework.constants.Constants.CHOOSE_CURRENCY;
+import static ru.deft.homework.constants.Constants.COMMAND_TO_REASKING;
+import static ru.deft.homework.constants.Constants.CURRENCY;
+import static ru.deft.homework.constants.Constants.DEPOSIT_CASH;
+import static ru.deft.homework.constants.Constants.ENTER_DENOMINATION;
+import static ru.deft.homework.constants.Constants.ENTER_NUMBER_OF_BILLS;
+import static ru.deft.homework.constants.Constants.ENTER_NUMBER_OF_OPERATION;
+import static ru.deft.homework.constants.Constants.ENTER_THE_AMOUNT;
+import static ru.deft.homework.constants.Constants.EXIT;
+import static ru.deft.homework.constants.Constants.FIND_OUT_THE_BALANCE;
+import static ru.deft.homework.constants.Constants.HAVE_A_NICE_DAY_BYE;
+import static ru.deft.homework.constants.Constants.WELCOME;
+import static ru.deft.homework.constants.Constants.WITHDRAW_CASH;
 
 class ATM {
-
 
     private static CashMachineActions atm;
     @SuppressWarnings("CheckStyle") private static final BufferedReader reader =
@@ -94,17 +95,40 @@ class ATM {
     }
 
     private static void deposit() throws IOException {
-        System.out.println(ENTER_DENOMINATION);
-        final int denomination = Integer.parseInt(reader.readLine());
+        BanknoteDenomination banknoteDenomination = null;
+        while (banknoteDenomination == null) {
+            System.out.println(ENTER_DENOMINATION);
+            final int denomination = Integer.parseInt(reader.readLine());
+            banknoteDenomination = checkDenomination(denomination);
+        }
         System.out.println(ENTER_NUMBER_OF_BILLS);
         final int countBills = Integer.parseInt(reader.readLine());
-        atm.depositCash(denomination, countBills);
+        atm.depositCash(banknoteDenomination, countBills);
     }
 
-    private static void withdraw() throws IOException {
-        System.out.println(ENTER_THE_AMOUNT);
-        final int amount = Integer.parseInt(reader.readLine());
-        atm.withdrawCash(amount);
+    private static BanknoteDenomination checkDenomination(int denomination) {
+        try {
+            for (BanknoteDenomination banknoteDenomination : BanknoteDenomination.values()) {
+                if (banknoteDenomination.getDenomanation() == denomination) {
+                    return banknoteDenomination;
+                }
+            }
+            throw new CashMachineException(
+                    String.format("Unknown banknote denomination type %d. Please try again", denomination));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private static void withdraw() {
+        try {
+            System.out.println(ENTER_THE_AMOUNT);
+            final int amount = Integer.parseInt(reader.readLine());
+            atm.withdrawCash(amount);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void balance() {

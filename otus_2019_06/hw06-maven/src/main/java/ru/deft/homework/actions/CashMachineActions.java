@@ -1,8 +1,10 @@
 package ru.deft.homework.actions;
 
+import ru.deft.homework.constants.BanknoteDenomination;
+
 public interface CashMachineActions {
 
-    void depositCash(int cellValue, int count);
+    void depositCash(BanknoteDenomination banknoteDenomination, int count);
 
     int withdrawCash(int value);
 
