@@ -1,7 +1,7 @@
 package ru.deft.homework;
 
 import ru.deft.homework.actions.CashMachineActions;
-import ru.deft.homework.constants.BanknoteDenomination;
+import ru.deft.homework.constants.BanknoteDenominationUs;
 import ru.deft.homework.errors.CashMachineException;
 import ru.deft.homework.impl.RubATM;
 import ru.deft.homework.impl.UsdATM;
@@ -28,7 +28,7 @@ import static ru.deft.homework.constants.Constants.WITHDRAW_CASH;
 class ATM {
 
     private static CashMachineActions atm;
-    @SuppressWarnings("CheckStyle") private static final BufferedReader reader =
+    private static final BufferedReader reader =
             new BufferedReader(new InputStreamReader(System.in));
 
     static void startWork() throws IOException, InterruptedException {
@@ -95,30 +95,15 @@ class ATM {
     }
 
     private static void deposit() throws IOException {
-        BanknoteDenomination banknoteDenomination = null;
+        Integer banknoteDenomination = null;
         while (banknoteDenomination == null) {
             System.out.println(ENTER_DENOMINATION);
             final int denomination = Integer.parseInt(reader.readLine());
-            banknoteDenomination = checkDenomination(denomination);
+            banknoteDenomination = atm.checkDenomination(denomination);
         }
         System.out.println(ENTER_NUMBER_OF_BILLS);
         final int countBills = Integer.parseInt(reader.readLine());
         atm.depositCash(banknoteDenomination, countBills);
-    }
-
-    private static BanknoteDenomination checkDenomination(int denomination) {
-        try {
-            for (BanknoteDenomination banknoteDenomination : BanknoteDenomination.values()) {
-                if (banknoteDenomination.getDenomanation() == denomination) {
-                    return banknoteDenomination;
-                }
-            }
-            throw new CashMachineException(
-                    String.format("Unknown banknote denomination type %d. Please try again", denomination));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
     }
 
     private static void withdraw() {
