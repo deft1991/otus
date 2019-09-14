@@ -7,7 +7,7 @@ import ru.deft.homework.api.dao.CommonDao;
 import ru.deft.homework.api.dao.DaoException;
 import ru.deft.homework.api.model.Account;
 import ru.deft.homework.api.sessionmanager.SessionManager;
-import ru.deft.homework.jdbc.DBExecutor;
+import ru.deft.homework.jdbc.DbExecutor;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @Log @RequiredArgsConstructor public class AccountDaoJdbc implements CommonDao<Account> {
 
     @Getter private final SessionManager sessionManager;
-    private final DBExecutor<Account> executor;
+    private final DbExecutor<Account> executor;
 
     @Override public long save(Account account) {
         try {

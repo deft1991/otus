@@ -6,8 +6,8 @@ import lombok.extern.java.Log;
 import ru.deft.homework.api.dao.CommonDao;
 import ru.deft.homework.api.dao.DaoException;
 import ru.deft.homework.api.model.User;
-import ru.deft.homework.api.sessionmanager.SessionManager;
-import ru.deft.homework.jdbc.DBExecutor;
+import ru.deft.homework.jdbc.DbExecutor;
+import ru.deft.homework.jdbc.sessionmanager.SessionManagerJdbc;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,16 +17,15 @@ import java.util.Optional;
 
 @Log @RequiredArgsConstructor public class UserDaoJdbc implements CommonDao<User> {
 
-    @Getter private final SessionManager sessionManager;
-    private final DBExecutor<User> executor;
+    @Getter private final SessionManagerJdbc sessionManager;
+    private final DbExecutor<User> executor;
 
     @Override public long save(User user) {
         try {
             List<String> list = new ArrayList<>();
-            list.add(String.valueOf(user.getId()));
             list.add(user.getName());
             list.add(String.valueOf(user.getAge()));
-            return executor.insertRecord(getConnection(), "insert into user(id, name, age) values (?,?,?)", list);
+            return executor.insertRecord(getConnection(), "insert into user(name, age) values (?,?)", list);
         } catch (Exception e) {
             log.info(e.getMessage());
             throw new DaoException(e);
@@ -52,7 +51,7 @@ import java.util.Optional;
 
     @Override public Optional<User> findById(long id) {
         try {
-            return executor.selectRecord(getConnection(), "select id, name from user where id  = ?", id, resultSet -> {
+            return executor.selectRecord(getConnection(), "select id, name, age from user where id  = ?", id, resultSet -> {
                 try {
                     if (resultSet.next())
                         return new User(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getInt("age"));

@@ -12,21 +12,24 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-@Log public class DBExecutor<T> {
+@Log public class DbExecutor<T> {
 
     public long insertRecord(Connection connection, String sql, List<String> params) throws SQLException {
-        Savepoint savePoint = connection.setSavepoint("savePoint");
+        Savepoint savePoint = connection.setSavepoint("savePointName");
         try (PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            for (int i = 0; i < params.size(); i++) {
-                pst.setString(i + 1, params.get(i));
+            for (int idx = 0; idx < params.size(); idx++) {
+                pst.setString(idx + 1, params.get(idx));
             }
-            return pst.executeUpdate();
+            pst.executeUpdate();
+            try (ResultSet rs = pst.getGeneratedKeys()) {
+                rs.next();
+                return rs.getInt(1);
+            }
         } catch (SQLException ex) {
             connection.rollback(savePoint);
-            log.info(ex.getMessage());
+            log.warning(ex.getMessage());
             throw ex;
         }
-
     }
 
     //    public long updateRecord(Connection connection, String sql, List<String> params) throws SQLException {
@@ -50,7 +53,6 @@ import java.util.function.Function;
 
     public Optional<T> selectRecord(Connection connection, String sql, long id, Function<ResultSet, T> rsHandler)
             throws SQLException {
-        Savepoint savepoint = connection.setSavepoint("savePoint");
         try (PreparedStatement pst = connection.prepareStatement(sql)) {
             pst.setLong(1, id);
             try (ResultSet rs = pst.executeQuery()) {

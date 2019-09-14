@@ -8,12 +8,19 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class DataSourceH2 implements DataSource {
-    private static final String URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
+    static final String JDBC_DRIVER = "org.h2.Driver";
+    static final String DB_URL = "jdbc:h2:~/test;DB_CLOSE_DELAY=-1";
+
+    //  Database credentials
+    static final String USER = "sa";
+    static final String PASS = "";
 
     @Override
     public Connection getConnection() throws SQLException {
-        Connection connection =  DriverManager.getConnection ("jdbc:h2:~/test", "sa","");
+        System.out.println("Connecting to a selected database...");
+        Connection connection =  DriverManager.getConnection(DB_URL,USER,PASS);
         connection.setAutoCommit(false);
+        System.out.println("Connected database successfully...");
         return connection;
     }
 

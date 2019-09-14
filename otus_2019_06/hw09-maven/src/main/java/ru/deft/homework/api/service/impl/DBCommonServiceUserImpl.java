@@ -18,7 +18,10 @@ import java.util.Optional;
         SessionManager sessionManager = commonDao.getSessionManager();
         sessionManager.beginSession();
         try {
-            return commonDao.save(user);
+            long userId = commonDao.save(user);
+            sessionManager.commitSession();
+            log.info("created user: " + userId);
+            return userId;
         } catch (Exception e) {
             log.info(e.getLocalizedMessage());
             sessionManager.rollbackSession();

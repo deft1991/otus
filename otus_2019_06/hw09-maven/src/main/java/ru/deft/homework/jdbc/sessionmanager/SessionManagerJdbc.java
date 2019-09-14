@@ -26,7 +26,7 @@ public class SessionManagerJdbc implements SessionManager {
         try {
             connection = dataSource.getConnection();
             databaseSession = new DatabaseSessionJdbc(connection);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new SessionManagerException(e);
         }
     }
@@ -35,7 +35,7 @@ public class SessionManagerJdbc implements SessionManager {
         checkConnection();
         try {
             connection.commit();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new SessionManagerException(e);
         }
     }
@@ -44,17 +44,16 @@ public class SessionManagerJdbc implements SessionManager {
         checkConnection();
         try {
             connection.rollback();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new SessionManagerException(e);
         }
-
     }
 
     @Override public void close() {
         checkConnection();
         try {
             connection.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new SessionManagerException(e);
         }
     }
@@ -73,5 +72,4 @@ public class SessionManagerJdbc implements SessionManager {
             throw new SessionManagerException(ex);
         }
     }
-
 }
