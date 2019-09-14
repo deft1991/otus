@@ -11,4 +11,9 @@ import ru.deft.homework.annotations.Id;
     @Id private Long id;
     private String type;
     private int rest;
+
+    public Account(String type, int rest) {
+        this.type = type;
+        this.rest = rest;
+    }
 }

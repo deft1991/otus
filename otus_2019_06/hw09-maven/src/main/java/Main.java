@@ -20,65 +20,34 @@ import java.util.Optional;
 
 @Log public class Main {
 
-    //    public static void main(String[] args) throws SQLException {
-    //        //        demo.createUserTable(dataSource);
-    //        //        demo.createAccountTable(dataSource);
-    //
-    //
-    //
-    //        //        DBCommonService dbCommonServiceAccount = getDDAccountService(sessionManager);
-    //
-    //        //        long firstUser = dbCommonServiceUser.save(new User(1L, "first", 12));
-    //
-    //        //        long firstAccount = dbCommonServiceAccount.save(new Account(2L, "type T", 12));
-    //
-    //        //        Optional<User> user = dbCommonServiceUser.findById(firstUser);
-    //        //        user.ifPresent(crUser -> log.info("created user, name:" + crUser.getName()));
-    //        //
-    //        //        Optional<Account> account = dbCommonServiceAccount.findById(firstUser);
-    //        //        account.ifPresent(crUser -> log.info("created Account, type:" + crUser.getType()));
-    //        //        System.out.println(user);
-    //        //        System.out.println(account);
-    //
-
-    //
-    //        DBCommonService dbCommonServiceUser = getDBUserService(sessionManager);
-    ////        List<String> list = new ArrayList<>();
-    ////        list.add(String.valueOf(1L));
-    ////        list.add("qqq");
-    ////        list.add("12");
-    ////        String sql = "insert into user(id, name, age) values (1,'qqq',12)";
-    ////        String sql2 = "select id from user where name = 'qqq'";
-    ////        stmt.executeUpdate(sql);
-    ////        ResultSet resultSet = stmt.executeQuery(sql2);
-    //
-    //        dbCommonServiceUser.save(new User(1L, "first", 12));
-    //        Optional<User> userFromBd = dbCommonServiceUser.findById(1L);
-    //        System.out.println(userFromBd);
-    //
-    //    }
-
-    private static final String URL = "jdbc:h2:mem:";
-
     public static void main(String[] args) throws SQLException {
-        Main demo = new Main();
+        Main main = new Main();
         DataSource dataSourceH2 = new DataSourceH2();
+        main.createAccountTable(dataSourceH2);
+        main.createUserTable(dataSourceH2);
         SessionManagerJdbc sessionManager = new SessionManagerJdbc(dataSourceH2);
         DBCommonService dbCommonServiceUser = getDBUserService(sessionManager);
+        DBCommonService dbCommonServiceAccount = getDDAccountService(sessionManager);
 
         long userId = dbCommonServiceUser.save(new User("qqq", 20));
-        log.info("created user: " + userId);
+//        log.info("created user: " + userId);
+//
+//        Optional<User> user = dbCommonServiceUser.findById(userId);
+//        System.out.println(user.get().getName());
+//        dbCommonServiceUser.update(new User(userId, "www", 30));
+//        user = dbCommonServiceUser.findById(userId);
+//        System.out.println(user.get().getName());
 
-        Optional<User> user = dbCommonServiceUser.findById(userId);
-        System.out.println(user.get().getName());
-
-    }
-
-    private void createTable(Connection connection) throws SQLException {
-        try (PreparedStatement pst = connection
-                .prepareStatement("create table user(id long auto_increment, name varchar(50),  age int(3))")) {
-            pst.executeUpdate();
-        }
+        long accountId = dbCommonServiceAccount.save(new Account("type", 20));
+        log.info("created account: " + accountId);
+        Optional<Account> account = dbCommonServiceAccount.findById(accountId);
+        System.out.println("account: " + account.get().getType());
+        dbCommonServiceAccount.update(new Account(accountId, "epyt", 11));
+        account = dbCommonServiceAccount.findById(accountId);
+        System.out.println(account.get().getType());
+//        dbCommonServiceUser.createOrUpdate(new User(11L, "aaaaaaaa", 2));
+//        user = dbCommonServiceUser.findById(11L);
+//        System.out.println(user.get().getName());
     }
 
     private static DBCommonService getDDAccountService(SessionManager sessionManager) {
@@ -95,7 +64,7 @@ import java.util.Optional;
 
     private void createUserTable(DataSource dataSource) throws SQLException {
         try (Connection connection = dataSource.getConnection(); PreparedStatement pst = connection
-                .prepareStatement("create table User(id long auto_increment, name varchar(50), age int(3))")) {
+                .prepareStatement("create table if not exists User(id long auto_increment, name varchar(50), age int(3))")) {
             pst.executeUpdate();
         }
         dataSource.getConnection().commit();
@@ -104,7 +73,7 @@ import java.util.Optional;
 
     private void createAccountTable(DataSource dataSource) throws SQLException {
         try (Connection connection = dataSource.getConnection(); PreparedStatement pst = connection
-                .prepareStatement("create table Account(id long auto_increment, type varchar(50), rest number)")) {
+                .prepareStatement("create table if not exists Account(id long auto_increment, type varchar(50), rest number)")) {
             pst.executeUpdate();
         }
         dataSource.getConnection().commit();

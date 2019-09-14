@@ -18,7 +18,10 @@ import java.util.Optional;
         SessionManager sessionManager = commonDao.getSessionManager();
         sessionManager.beginSession();
         try {
-            return commonDao.save(account);
+            long accountId = commonDao.save(account);
+            sessionManager.commitSession();
+            log.info("created account: " + accountId);
+            return accountId;
         } catch (Exception e) {
             log.info(e.getLocalizedMessage());
             sessionManager.rollbackSession();
@@ -26,15 +29,45 @@ import java.util.Optional;
         }
     }
 
-    @Override public void update(Account user) {
-
+    @Override public void update(Account account) {
+        SessionManager sessionManager = commonDao.getSessionManager();
+        sessionManager.beginSession();
+        try {
+            commonDao.update(account);
+            sessionManager.commitSession();
+        } catch (Exception e) {
+            log.info(e.getLocalizedMessage());
+            sessionManager.rollbackSession();
+            throw new DBServiceException(e);
+        }
     }
 
-    @Override public void createOrUpdate(Account user) {
-
+    @Override public void createOrUpdate(Account account) {
+        SessionManager sessionManager = commonDao.getSessionManager();
+        sessionManager.beginSession();
+        try {
+            commonDao.createOrUpdate(account);
+            sessionManager.commitSession();
+        } catch (Exception e) {
+            log.info(e.getLocalizedMessage());
+            sessionManager.rollbackSession();
+            throw new DBServiceException(e);
+        }
     }
 
     @Override public Optional<Account> findById(long id) {
-        return null;
+        try (SessionManager sessionManager = commonDao.getSessionManager()) {
+            sessionManager.beginSession();
+            try {
+                Optional<Account> accountOptional = commonDao.findById(id);
+
+                log.info("account: " + accountOptional.orElse(null));
+                return accountOptional;
+            } catch (Exception e) {
+                log.warning(e.getMessage());
+                sessionManager.rollbackSession();
+            }
+            return Optional.empty();
+        }
     }
 }

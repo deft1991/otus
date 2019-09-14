@@ -32,24 +32,20 @@ import java.util.function.Function;
         }
     }
 
-    //    public long updateRecord(Connection connection, String sql, List<String> params) throws SQLException {
-    //        Savepoint savePoint = connection.setSavepoint("savePoint");
-    //        try (PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-    //            for (int i = 0; i < params.size(); i++) {
-    //                pst.setString(i + 1, params.get(i));
-    //            }
-    ////           return pst.executeUpdate();
-    //            try (ResultSet rs = pst.getGeneratedKeys()) {
-    //                rs.next();
-    //                return rs.getInt(1);
-    //            }
-    //        } catch (SQLException ex) {
-    //            connection.rollback(savePoint);
-    //            log.info(ex.getMessage());
-    //            throw ex;
-    //        }
-    //
-    //    }
+        public long updateRecord(Connection connection, String sql, List<String> params) throws SQLException {
+            Savepoint savePoint = connection.setSavepoint("savePoint");
+            try (PreparedStatement pst = connection.prepareStatement(sql)) {
+                for (int i = 0; i < params.size(); i++) {
+                    pst.setString(i + 1, params.get(i));
+                }
+               return pst.executeUpdate();
+            } catch (SQLException ex) {
+                connection.rollback(savePoint);
+                log.info(ex.getMessage());
+                throw ex;
+            }
+
+        }
 
     public Optional<T> selectRecord(Connection connection, String sql, long id, Function<ResultSet, T> rsHandler)
             throws SQLException {

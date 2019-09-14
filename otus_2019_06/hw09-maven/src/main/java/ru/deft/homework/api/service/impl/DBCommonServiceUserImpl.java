@@ -30,11 +30,29 @@ import java.util.Optional;
     }
 
     @Override public void update(User user) {
-
+        SessionManager sessionManager = commonDao.getSessionManager();
+        sessionManager.beginSession();
+        try {
+            commonDao.update(user);
+            sessionManager.commitSession();
+        } catch (Exception e) {
+            log.info(e.getLocalizedMessage());
+            sessionManager.rollbackSession();
+            throw new DBServiceException(e);
+        }
     }
 
     @Override public void createOrUpdate(User user) {
-
+        SessionManager sessionManager = commonDao.getSessionManager();
+        sessionManager.beginSession();
+        try {
+            commonDao.createOrUpdate(user);
+            sessionManager.commitSession();
+        } catch (Exception e) {
+            log.info(e.getLocalizedMessage());
+            sessionManager.rollbackSession();
+            throw new DBServiceException(e);
+        }
     }
 
     @Override public Optional<User> findById(long id) {
