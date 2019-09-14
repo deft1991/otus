@@ -15,7 +15,7 @@
         <module>hw03-maven</module>
         <module>hw04-maven</module>
         <module>hw05-maven</module>
-        <module>hw06-maven</module>
+        <!--        <module>hw06-maven</module>-->
         <module>hw08-maven</module>
     </modules>
 
@@ -53,9 +53,15 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.19</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.junit.platform</groupId>
+                            <artifactId>junit-platform-surefire-provider</artifactId>
+                            <version>1.0.0</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
