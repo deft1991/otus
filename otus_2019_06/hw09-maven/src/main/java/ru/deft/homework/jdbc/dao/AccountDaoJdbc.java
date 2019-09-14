@@ -52,11 +52,7 @@ import java.util.Optional;
             list.add(String.valueOf(account.getId()));
             list.add(account.getType());
             list.add(String.valueOf(account.getRest()));
-            list.add(account.getType());
-            list.add(String.valueOf(account.getRest()));
-            executor.updateRecord(getConnection(),
-                    "IF EXISTS ( SELECT * FROM Account WHERE id = ? ) " + "update Account set type = ? , rest = ? where id = ? "
-                            + "ELSE insert into Account(type, rest) values (?,?)", list);
+            executor.updateRecord(getConnection(), "MERGE INTO Account KEY (ID) VALUES (?, ?, ?)", list);
         } catch (Exception e) {
             log.info(e.getMessage());
             throw new DaoException(e);

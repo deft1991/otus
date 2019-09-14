@@ -30,13 +30,13 @@ import java.util.Optional;
         DBCommonService dbCommonServiceAccount = getDDAccountService(sessionManager);
 
         long userId = dbCommonServiceUser.save(new User("qqq", 20));
-//        log.info("created user: " + userId);
-//
-//        Optional<User> user = dbCommonServiceUser.findById(userId);
-//        System.out.println(user.get().getName());
-//        dbCommonServiceUser.update(new User(userId, "www", 30));
-//        user = dbCommonServiceUser.findById(userId);
-//        System.out.println(user.get().getName());
+        log.info("created user: " + userId);
+
+        Optional<User> user = dbCommonServiceUser.findById(userId);
+        System.out.println(user.get().getName());
+        dbCommonServiceUser.update(new User(userId, "www", 30));
+        user = dbCommonServiceUser.findById(userId);
+        System.out.println(user.get().getName());
 
         long accountId = dbCommonServiceAccount.save(new Account("type", 20));
         log.info("created account: " + accountId);
@@ -45,9 +45,22 @@ import java.util.Optional;
         dbCommonServiceAccount.update(new Account(accountId, "epyt", 11));
         account = dbCommonServiceAccount.findById(accountId);
         System.out.println(account.get().getType());
-//        dbCommonServiceUser.createOrUpdate(new User(11L, "aaaaaaaa", 2));
-//        user = dbCommonServiceUser.findById(11L);
-//        System.out.println(user.get().getName());
+
+        dbCommonServiceUser.createOrUpdate(new User(11L, "aaaaaaaa", 2));
+        user = dbCommonServiceUser.findById(11L);
+        System.out.println(user.get().getName());
+
+        dbCommonServiceUser.createOrUpdate(new User(11L, "bbbbbbb", 2));
+        user = dbCommonServiceUser.findById(11L);
+        System.out.println(user.get().getName());
+
+        dbCommonServiceAccount.createOrUpdate(new Account(11L, "ttttyppe", 2));
+        account = dbCommonServiceAccount.findById(11L);
+        System.out.println(account.get().getType());
+
+        dbCommonServiceAccount.createOrUpdate(new Account(11L, "eppppyyyyt", 5));
+        account = dbCommonServiceAccount.findById(11L);
+        System.out.println(account.get().getType());
     }
 
     private static DBCommonService getDDAccountService(SessionManager sessionManager) {

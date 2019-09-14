@@ -51,11 +51,7 @@ import java.util.Optional;
             list.add(String.valueOf(user.getId()));
             list.add(user.getName());
             list.add(String.valueOf(user.getAge()));
-            list.add(user.getName());
-            list.add(String.valueOf(user.getAge()));
-            executor.updateRecord(getConnection(),
-                    "IF EXISTS ( SELECT id FROM user WHERE id = ? ) " + "update user set name = ? , age = ? where id = ? "
-                            + "ELSE insert into user(name, age) values (?,?)", list);
+            executor.updateRecord(getConnection(), "MERGE INTO user KEY (ID) VALUES (?, ?, ?)", list);
         } catch (Exception e) {
             log.info(e.getMessage());
             throw new DaoException(e);
