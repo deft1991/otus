@@ -27,11 +27,11 @@ import static ru.deft.homework.constants.Constants.WITHDRAW_CASH;
 
 class ATM {
 
-    private static CashMachineActions atm;
+    private CashMachineActions atm;
     private static final BufferedReader reader =
             new BufferedReader(new InputStreamReader(System.in));
 
-    static void startWork() throws IOException, InterruptedException {
+    void startWork() throws IOException, InterruptedException {
         System.out.println(WELCOME);
         Thread.sleep(500);
 
@@ -78,7 +78,7 @@ class ATM {
         System.out.println(ENTER_NUMBER_OF_OPERATION);
     }
 
-    private static void createCurrencyATM() throws IOException {
+    private void createCurrencyATM() throws IOException {
         System.out.println(CHOOSE_CURRENCY);
         System.out.println(CURRENCY);
         final int currency = Integer.parseInt(reader.readLine());
@@ -94,7 +94,7 @@ class ATM {
         }
     }
 
-    private static void deposit() throws IOException {
+    private void deposit() throws IOException {
         Integer banknoteDenomination = null;
         while (banknoteDenomination == null) {
             System.out.println(ENTER_DENOMINATION);
@@ -106,7 +106,7 @@ class ATM {
         atm.depositCash(banknoteDenomination, countBills);
     }
 
-    private static void withdraw() {
+    private void withdraw() {
         try {
             System.out.println(ENTER_THE_AMOUNT);
             final int amount = Integer.parseInt(reader.readLine());
@@ -116,11 +116,11 @@ class ATM {
         }
     }
 
-    private static void balance() {
+    private void balance() {
         atm.getBalance();
     }
 
-    private static int getCommandReRty() throws IOException, InterruptedException {
+    private int getCommandReRty() throws IOException, InterruptedException {
         int command;
         System.out.println("Unknown command. Try again.");
         prepareActions();
