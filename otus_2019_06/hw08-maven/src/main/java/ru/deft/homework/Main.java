@@ -2,6 +2,7 @@ package ru.deft.homework;
 
 import com.google.gson.Gson;
 import org.json.simple.parser.ParseException;
+import ru.deft.homework.testobjects.Adress;
 import ru.deft.homework.testobjects.User;
 
 import java.util.ArrayList;
@@ -22,14 +23,19 @@ public class Main {
         todos.put(2, "do anything");
         todos.put(3, "hoh hoh");
         todos.put(4, "piu piu");
-        Long[] nums = new Long[]{1L,2L,3L,4L,5L};
-        User user = new User(1L, "Greengo", nickNames, todos);
+        Long[] nums = new Long[] {1L, 2L, 3L, 4L, 5L};
+        User user = new User();
+        user.setNickNames(nickNames);
+        user.setTodos(todos);
         user.setNums(nums);
+        user.setAge(10);
+        Adress[] adresses = new Adress[] {new Adress("kursk", "kur_street"), new Adress("piter", "pit_street")};
+        user.setAddresses(adresses);
         JsonWriterImpl jsonWriter = new JsonWriterImpl();
         String jsonString = jsonWriter.writeToJson(user);
         Gson gson = new Gson();
         User user1 = gson.fromJson(jsonString, User.class);
-        System.out.println(user1.getId() + " " + user1.getTodos());
+        System.out.println(user1);
 
     }
 

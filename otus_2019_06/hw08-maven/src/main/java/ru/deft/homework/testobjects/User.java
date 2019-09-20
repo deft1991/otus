@@ -1,5 +1,6 @@
 package ru.deft.homework.testobjects;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,8 @@ public class User {
     private List<String> nickNames;
     private Map<Integer, String> todos;
     private Long[] nums;
+    private Adress[] addresses;
+    private int age;
 
     public User() {
     }
@@ -63,5 +66,26 @@ public class User {
 
     public void setNums(Long[] nums) {
         this.nums = nums;
+    }
+
+    public Adress[] getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Adress[] addresses) {
+        this.addresses = addresses;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override public String toString() {
+        return "User{" + "id=" + id + ", name='" + name + '\'' + ", nickNames=" + nickNames + ", todos=" + todos + ", nums="
+                + Arrays.toString(nums) + ", addresses=" + Arrays.toString(addresses) + ", age=" + age + '}';
     }
 }

@@ -1,6 +1,7 @@
 package ru.deft.homework;
 
 import com.google.gson.Gson;
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.deft.homework.testobjects.User;
