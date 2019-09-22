@@ -15,8 +15,9 @@
         <module>hw03-maven</module>
         <module>hw04-maven</module>
         <module>hw05-maven</module>
-        <module>hw06-maven</module>
+<!--        <module>hw06-maven</module>-->
         <module>hw08-maven</module>
+        <module>hw10-maven</module>
     </modules>
 
     <description>Code examples</description>
