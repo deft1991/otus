@@ -4,12 +4,11 @@ package ru.deft.homework.dao;
  * Created by sgolitsyn on 9/22/19
  */
 
-import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.deft.homework.AbstractHibernateTest;
-import ru.deft.homework.api.dao.UserDao;
+import ru.deft.homework.api.dao.BaseDao;
 import ru.deft.homework.api.model.Address;
 import ru.deft.homework.api.model.Phone;
 import ru.deft.homework.api.model.User;
@@ -22,18 +21,23 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("Dao для работы с пользователями должно ") public class UserDaoHibernateTest extends AbstractHibernateTest {
+@DisplayName("Dao для работы с пользователями должно ")
+public class UserDaoHibernateTest extends AbstractHibernateTest {
 
     private SessionManager sessionManagerHibernate;
-    private UserDao userDaoHibernate;
+    private BaseDao userDaoHibernate;
 
-    @BeforeEach @Override public void setUp() {
+    @BeforeEach
+    @Override
+    public void setUp() {
         super.setUp();
         sessionManagerHibernate = new SessionManagerHibernate(sessionFactory);
         userDaoHibernate = new UserDaoHibernate(sessionManagerHibernate);
     }
 
-    @Test @DisplayName(" корректно загружать пользователя по заданному id") void shouldFindCorrectUserById() {
+    @Test
+    @DisplayName(" корректно загружать пользователя по заданному id")
+    void shouldFindCorrectUserById() {
         User expectedUser = new User(0L, "Вася");
         saveUser(expectedUser);
 
@@ -46,7 +50,9 @@ import static org.assertj.core.api.Assertions.assertThat;
         assertThat(mayBeUser).isEqualToIgnoringNullFields(expectedUser);
     }
 
-    @DisplayName(" корректно сохранять пользователя") @Test void shouldCorrectSaveUser() {
+    @DisplayName(" корректно сохранять пользователя")
+    @Test
+    void shouldCorrectSaveUser() {
         User expectedUser = new User(0L, "Вася");
         sessionManagerHibernate.beginSession();
         long id = userDaoHibernate.save(expectedUser);
@@ -68,7 +74,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
     }
 
-    @DisplayName(" корректно сохранять пользователя  c адрессом") @Test void shouldCorrectSaveUserWithAddress() {
+    @DisplayName(" корректно сохранять пользователя  c адрессом")
+    @Test
+    void shouldCorrectSaveUserWithAddress() {
         User expectedUser = new User(0L, "Вася");
         sessionManagerHibernate.beginSession();
         Address expectedAddress = new Address() {{
@@ -86,13 +94,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
     }
 
-    @DisplayName(" корректно сохранять пользователя  c измененным адрессом") @Test
+    @DisplayName(" корректно сохранять пользователя  c измененным адрессом")
+    @Test
     void shouldCorrectSaveUserWithChangedAddress() {
         User expectedUser = new User(0L, "Вася");
         sessionManagerHibernate.beginSession();
-        Address expectedAddress = new Address() {{
-            setStreet("vorobieva");
-        }};
+        Address expectedAddress = new Address("vorobieva");
         expectedUser.setAddress(expectedAddress);
         long id = userDaoHibernate.save(expectedUser);
         sessionManagerHibernate.commitSession();
@@ -110,30 +117,33 @@ import static org.assertj.core.api.Assertions.assertThat;
         User afterAddrUpdateUser = loadUser(id);
         assertThat(afterAddrUpdateUser).isNotNull().hasFieldOrPropertyWithValue("name", actualUser.getName());
         assertThat(afterAddrUpdateUser.getAddress()).isNotNull()
-                                                    .hasFieldOrPropertyWithValue("street", actualUser.getAddress().getStreet());
+                .hasFieldOrPropertyWithValue("street", actualUser.getAddress().getStreet());
     }
 
-
-    @DisplayName(" корректно сохранять пользователя  c телефонами") @Test
+    @DisplayName(" корректно сохранять пользователя  c телефонами")
+    @Test
     void shouldCorrectSaveUserWithPhones() {
         User expectedUser = new User(0L, "Вася");
         sessionManagerHibernate.beginSession();
-        List<Phone> expectedPhones = Arrays.asList(new Phone(){{setNumber("11-11");}}, new Phone(){{setNumber("22-22");}});
-        expectedUser.setPhones(expectedPhones);
+        List<Phone> expectedPhones = Arrays.asList(new Phone("11-11"), new Phone("22-22")
+        );
+        expectedUser.addPhone(new Phone("11-11"));
+        expectedUser.addPhone(new Phone("22-22"));
         long id = userDaoHibernate.save(expectedUser);
         sessionManagerHibernate.commitSession();
         assertThat(id).isGreaterThan(0);
 
-        User actualUser = loadUser(id);
-        sessionManagerHibernate.beginSession();
+        User actualUser = loadUserWithPhones(id);
         List<Phone> phones = actualUser.getPhones();
 
         assertThat(actualUser).isNotNull().hasFieldOrPropertyWithValue("name", expectedUser.getName());
-
+        assertThat(phones).isNotNull().hasSameSizeAs(expectedPhones);
 
     }
 
-    @DisplayName(" возвращать менеджер сессий") @Test void getSessionManager() {
+    @DisplayName(" возвращать менеджер сессий")
+    @Test
+    void getSessionManager() {
         assertThat(userDaoHibernate.getSessionManager()).isNotNull().isEqualTo(sessionManagerHibernate);
     }
 }

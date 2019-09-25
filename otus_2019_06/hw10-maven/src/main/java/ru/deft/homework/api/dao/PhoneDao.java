@@ -5,7 +5,7 @@ import java.util.List;
 /*
  * Created by sgolitsyn on 9/22/19
  */
-public interface PhoneDao<T> extends UserDao<T> {
+public interface PhoneDao<T> extends BaseDao<T> {
 
     List<T> findByUserId(long id);
 }

@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.hibernate.Session;
 import ru.deft.homework.api.dao.DaoExceprion;
-import ru.deft.homework.api.dao.UserDao;
+import ru.deft.homework.api.dao.BaseDao;
 import ru.deft.homework.api.model.User;
 import ru.deft.homework.api.sessionmanager.SessionManager;
 import ru.deft.homework.hibernate.sessionmanager.DbSessionHibernate;
 
 import java.util.logging.Level;
 
-@Log @RequiredArgsConstructor public class UserDaoHibernate implements UserDao<User> {
+@Log @RequiredArgsConstructor public class UserDaoHibernate implements BaseDao<User> {
 
     private final SessionManager sessionManager;
 

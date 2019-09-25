@@ -2,7 +2,7 @@ package ru.deft.homework.api.dao;
 
 import ru.deft.homework.api.sessionmanager.SessionManager;
 
-public interface UserDao<T> {
+public interface BaseDao<T> {
 
     T getById(Long id);
 

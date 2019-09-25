@@ -1,40 +1,52 @@
 package ru.deft.homework.api.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.xml.stream.events.Comment;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity @Table(name = "users") @Getter @Setter @NoArgsConstructor public class User {
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+public class User {
 
-    @Id @GeneratedValue private Long id;
-    @Column(name = "name", nullable = false) private String name;
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Phone> phones;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+//    @JoinColumn(name = "user_id")
+    private List<Phone> phones = new ArrayList<>();
 
     public User(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    @Override public String toString() {
+    public void addPhone(Phone phone) {
+        phones.add(phone);
+        phone.setUser(this);
+    }
+
+    public void removeComment(Phone phone) {
+        phones.remove(phone);
+        phone.setUser(null);
+    }
+
+    @Override
+    public String toString() {
         return "User{" + "id=" + id + ", name='" + name + '\'' + ", address=" + address + ", phones=" + phones + '}';
     }
 }

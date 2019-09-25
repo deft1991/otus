@@ -1,20 +1,29 @@
 package ru.deft.homework.api.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Entity @Table(name = "phone") @Data public class Phone {
+@Entity
+@Table(name = "phone")
+@Data
+@NoArgsConstructor
+public class Phone {
 
-    @Id @GeneratedValue private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    @Column(name = "number") private String number;
+    @Column(name = "number")
+    private String number;
 
-    @ManyToOne @JoinColumn(name = "user_id", referencedColumnName = "id") private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+    public Phone(String number) {
+        this.number = number;
+    }
 }
