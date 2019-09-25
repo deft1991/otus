@@ -15,6 +15,7 @@
         <module>hw03-maven</module>
         <module>hw04-maven</module>
         <module>hw05-maven</module>
+        <module>hw06-maven</module>
     </modules>
 
     <description>Code examples</description>
@@ -38,10 +39,25 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.3.1</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
     <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+            </plugin>
+
+        </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
