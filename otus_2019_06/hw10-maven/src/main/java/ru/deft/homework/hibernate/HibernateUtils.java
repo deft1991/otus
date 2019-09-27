@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class HibernateUtils {
 
 
-    public static SessionFactory buildSessionFactory(String configResourceFileName, Class ...annotatedClasses){
+    public static SessionFactory buildSessionFactory(String configResourceFileName, Class... annotatedClasses) {
         Configuration configuration = new Configuration().configure(configResourceFileName);
         MetadataSources metadataSources = new MetadataSources(createServiceRegistry(configuration));
         Arrays.stream(annotatedClasses).forEach(metadataSources::addAnnotatedClass);
@@ -23,7 +23,7 @@ public class HibernateUtils {
         return metadata.getSessionFactoryBuilder().build();
     }
 
-    private static StandardServiceRegistry createServiceRegistry(Configuration configuration){
+    private static StandardServiceRegistry createServiceRegistry(Configuration configuration) {
         return new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties()).build();
     }

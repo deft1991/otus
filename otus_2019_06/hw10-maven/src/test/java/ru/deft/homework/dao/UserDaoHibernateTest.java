@@ -7,6 +7,8 @@ package ru.deft.homework.dao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import ru.deft.homework.AbstractHibernateTest;
 import ru.deft.homework.api.dao.BaseDao;
 import ru.deft.homework.api.model.Address;
@@ -50,18 +52,40 @@ public class UserDaoHibernateTest extends AbstractHibernateTest {
         assertThat(mayBeUser).isEqualToIgnoringNullFields(expectedUser);
     }
 
-    @DisplayName(" корректно сохранять пользователя")
-    @Test
-    void shouldCorrectSaveUser() {
+    @ParameterizedTest(name = "корректно сохранять пользователя c адрессом : {0},  с телефонами : {1}")
+    @CsvSource({"false,false", "true,false", "false,true", "true,true"})
+    void shouldCorrectSaveUser(boolean withAddress, boolean withPhones) {
         User expectedUser = new User(0L, "Вася");
+        Address expectedAddress = new Address();
+        List<Phone> expectedPhones = Arrays.asList(new Phone("11-11"), new Phone("22-22"));
+        if (withAddress) {
+            expectedAddress = new Address("vorobieva");
+            expectedUser.setAddress(expectedAddress);
+        }
+        if (withPhones) {
+            expectedUser.addPhone(new Phone("11-11"));
+            expectedUser.addPhone(new Phone("22-22"));
+        }
         sessionManagerHibernate.beginSession();
         long id = userDaoHibernate.save(expectedUser);
         sessionManagerHibernate.commitSession();
 
         assertThat(id).isGreaterThan(0);
 
-        User actualUser = loadUser(id);
+        User actualUser;
+        if (withPhones) {
+            actualUser = loadUserWithPhones(id);
+        } else {
+            actualUser = loadUser(id);
+        }
         assertThat(actualUser).isNotNull().hasFieldOrPropertyWithValue("name", expectedUser.getName());
+        if (withAddress) {
+            assertThat(actualUser.getAddress()).isNotNull().hasFieldOrPropertyWithValue("street", expectedAddress.getStreet());
+        }
+        if (withPhones) {
+            List<Phone> phones = actualUser.getPhones();
+            assertThat(phones).isNotNull().hasSameSizeAs(expectedPhones);
+        }
 
         expectedUser = new User(id, "Не Вася");
         sessionManagerHibernate.beginSession();
@@ -71,26 +95,6 @@ public class UserDaoHibernateTest extends AbstractHibernateTest {
         assertThat(newId).isGreaterThan(0).isEqualTo(id);
         actualUser = loadUser(newId);
         assertThat(actualUser).isNotNull().hasFieldOrPropertyWithValue("name", expectedUser.getName());
-
-    }
-
-    @DisplayName(" корректно сохранять пользователя  c адрессом")
-    @Test
-    void shouldCorrectSaveUserWithAddress() {
-        User expectedUser = new User(0L, "Вася");
-        sessionManagerHibernate.beginSession();
-        Address expectedAddress = new Address() {{
-            setStreet("vorobieva");
-        }};
-        expectedUser.setAddress(expectedAddress);
-        long id = userDaoHibernate.save(expectedUser);
-        sessionManagerHibernate.commitSession();
-
-        assertThat(id).isGreaterThan(0);
-
-        User actualUser = loadUser(id);
-        assertThat(actualUser).isNotNull().hasFieldOrPropertyWithValue("name", expectedUser.getName());
-        assertThat(actualUser.getAddress()).isNotNull().hasFieldOrPropertyWithValue("street", expectedAddress.getStreet());
 
     }
 
@@ -118,27 +122,6 @@ public class UserDaoHibernateTest extends AbstractHibernateTest {
         assertThat(afterAddrUpdateUser).isNotNull().hasFieldOrPropertyWithValue("name", actualUser.getName());
         assertThat(afterAddrUpdateUser.getAddress()).isNotNull()
                 .hasFieldOrPropertyWithValue("street", actualUser.getAddress().getStreet());
-    }
-
-    @DisplayName(" корректно сохранять пользователя  c телефонами")
-    @Test
-    void shouldCorrectSaveUserWithPhones() {
-        User expectedUser = new User(0L, "Вася");
-        sessionManagerHibernate.beginSession();
-        List<Phone> expectedPhones = Arrays.asList(new Phone("11-11"), new Phone("22-22")
-        );
-        expectedUser.addPhone(new Phone("11-11"));
-        expectedUser.addPhone(new Phone("22-22"));
-        long id = userDaoHibernate.save(expectedUser);
-        sessionManagerHibernate.commitSession();
-        assertThat(id).isGreaterThan(0);
-
-        User actualUser = loadUserWithPhones(id);
-        List<Phone> phones = actualUser.getPhones();
-
-        assertThat(actualUser).isNotNull().hasFieldOrPropertyWithValue("name", expectedUser.getName());
-        assertThat(phones).isNotNull().hasSameSizeAs(expectedPhones);
-
     }
 
     @DisplayName(" возвращать менеджер сессий")

@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import ru.deft.homework.api.sessionmanager.DataBaseSession;
-import ru.deft.homework.api.sessionmanager.SessionManager;
 
 @RequiredArgsConstructor
 @Getter

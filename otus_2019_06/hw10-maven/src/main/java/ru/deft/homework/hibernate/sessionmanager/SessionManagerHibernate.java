@@ -12,12 +12,15 @@ import ru.deft.homework.api.sessionmanager.SessionManagerException;
 
 import java.util.logging.Level;
 
-@Log @RequiredArgsConstructor public class SessionManagerHibernate implements SessionManager {
+@Log
+@RequiredArgsConstructor
+public class SessionManagerHibernate implements SessionManager {
 
-    private DbSessionHibernate dataBaseSession;
     private final SessionFactory sessionFactory;
+    private DbSessionHibernate dataBaseSession;
 
-    @Override public void beginSession() {
+    @Override
+    public void beginSession() {
         try {
             dataBaseSession = new DbSessionHibernate(sessionFactory.openSession());
         } catch (HibernateException e) {
@@ -26,7 +29,8 @@ import java.util.logging.Level;
         }
     }
 
-    @Override public void commitSession() {
+    @Override
+    public void commitSession() {
         checkSessionAndTransaction();
         try {
             dataBaseSession.getTransaction().commit();
@@ -36,7 +40,8 @@ import java.util.logging.Level;
         }
     }
 
-    @Override public void commitTransaction() {
+    @Override
+    public void commitTransaction() {
         checkSessionAndTransaction();
         try {
             dataBaseSession.getTransaction().commit();
@@ -45,7 +50,8 @@ import java.util.logging.Level;
         }
     }
 
-    @Override public void rollbackSession() {
+    @Override
+    public void rollbackSession() {
         checkSessionAndTransaction();
         try {
             dataBaseSession.getTransaction().rollback();
@@ -55,7 +61,8 @@ import java.util.logging.Level;
         }
     }
 
-    @Override public void close() {
+    @Override
+    public void close() {
         if (dataBaseSession == null) {
             return;
         }
@@ -77,7 +84,8 @@ import java.util.logging.Level;
         }
     }
 
-    @Override public DataBaseSession getCurrentSession() {
+    @Override
+    public DataBaseSession getCurrentSession() {
         checkSessionAndTransaction();
         return dataBaseSession;
     }
