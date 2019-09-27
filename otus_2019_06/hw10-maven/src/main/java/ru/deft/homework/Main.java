@@ -2,11 +2,11 @@ package ru.deft.homework;
 
 import lombok.extern.java.Log;
 import org.hibernate.SessionFactory;
-import ru.deft.homework.api.dao.BaseDao;
+import ru.deft.homework.api.dao.UserDao;
 import ru.deft.homework.api.model.Address;
 import ru.deft.homework.api.model.Phone;
 import ru.deft.homework.api.model.User;
-import ru.deft.homework.api.service.DbBaseService;
+import ru.deft.homework.api.service.DbUserService;
 import ru.deft.homework.api.service.impl.DbServiceImpl;
 import ru.deft.homework.api.sessionmanager.SessionManager;
 import ru.deft.homework.hibernate.HibernateUtils;
@@ -24,11 +24,11 @@ public class Main {
                         Phone.class,
                         Address.class);
         SessionManager sessionManagerHibernate = new SessionManagerHibernate(sessionFactory);
-        BaseDao userDao = new UserDaoHibernate(sessionManagerHibernate);
-        DbBaseService dbService = new DbServiceImpl(userDao);
+        UserDao userDao = new UserDaoHibernate(sessionManagerHibernate);
+        DbUserService dbService = new DbServiceImpl(userDao);
 
         long id = dbService.save(new User(0L, "Вася"));
-        User mayBeCreatedUser = (User) dbService.getById(id);
+        User mayBeCreatedUser = dbService.getById(id);
         System.out.println(mayBeCreatedUser.getName());
 
         Address address = new Address();

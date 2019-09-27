@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ru.deft.homework.AbstractHibernateTest;
-import ru.deft.homework.api.dao.BaseDao;
+import ru.deft.homework.api.dao.UserDao;
 import ru.deft.homework.api.model.Address;
 import ru.deft.homework.api.model.Phone;
 import ru.deft.homework.api.model.User;
@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserDaoHibernateTest extends AbstractHibernateTest {
 
     private SessionManager sessionManagerHibernate;
-    private BaseDao userDaoHibernate;
+    private UserDao userDaoHibernate;
 
     @BeforeEach
     @Override
@@ -46,10 +46,10 @@ public class UserDaoHibernateTest extends AbstractHibernateTest {
         assertThat(expectedUser.getId()).isGreaterThan(0);
 
         sessionManagerHibernate.beginSession();
-        User mayBeUser = (User) userDaoHibernate.getById(expectedUser.getId());
+        User mayBeUser = userDaoHibernate.getById(expectedUser.getId());
         sessionManagerHibernate.commitSession();
 
-        assertThat(mayBeUser).isEqualToIgnoringNullFields(expectedUser);
+        assertThat(mayBeUser).isEqualToComparingOnlyGivenFields(expectedUser, "name");
     }
 
     @ParameterizedTest(name = "корректно сохранять пользователя c адрессом : {0},  с телефонами : {1}")

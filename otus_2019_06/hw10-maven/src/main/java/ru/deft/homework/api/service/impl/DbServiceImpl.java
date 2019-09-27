@@ -2,8 +2,9 @@ package ru.deft.homework.api.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import ru.deft.homework.api.dao.BaseDao;
-import ru.deft.homework.api.service.DbBaseService;
+import ru.deft.homework.api.dao.UserDao;
+import ru.deft.homework.api.model.User;
+import ru.deft.homework.api.service.DbUserService;
 import ru.deft.homework.api.service.DbServiceException;
 import ru.deft.homework.api.sessionmanager.SessionManager;
 
@@ -11,16 +12,15 @@ import java.util.logging.Level;
 
 @Log
 @RequiredArgsConstructor
-public class DbServiceImpl<T> implements DbBaseService<T> {
+public class DbServiceImpl implements DbUserService {
 
-    private final BaseDao baseDao;
+    private final UserDao userDao;
 
-    @Override
-    public T getById(final Long id) {
-        try (SessionManager sessionManager = baseDao.getSessionManager()) {
+    public User getById(final Long id) {
+        try (SessionManager sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                T byId = (T) baseDao.getById(id);
+                User byId = (User) userDao.getById(id);
                 log.log(Level.INFO, "getById.{}" + byId.toString());
                 return byId;
             } catch (Exception e) {
@@ -35,11 +35,11 @@ public class DbServiceImpl<T> implements DbBaseService<T> {
 
     // todo parametrize function and set needed consumer
     @Override
-    public long save(final T user) {
-        try (SessionManager sessionManager = baseDao.getSessionManager()) {
+    public long save(final User user) {
+        try (SessionManager sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                long byId = baseDao.save(user);
+                long byId = userDao.save(user);
                 log.log(Level.INFO, "save.{}" + byId);
                 return byId;
             } catch (Exception e) {
@@ -52,12 +52,11 @@ public class DbServiceImpl<T> implements DbBaseService<T> {
         return -1L;
     }
 
-    @Override
-    public long update(final T user) {
-        try (SessionManager sessionManager = baseDao.getSessionManager()) {
+    public long update(final User user) {
+        try (SessionManager sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                long byId = baseDao.update(user);
+                long byId = userDao.update(user);
                 log.log(Level.INFO, "update.{}" + byId);
                 return byId;
             } catch (Exception e) {
@@ -70,12 +69,11 @@ public class DbServiceImpl<T> implements DbBaseService<T> {
         return -1L;
     }
 
-    @Override
-    public long merge(final T user) {
-        try (SessionManager sessionManager = baseDao.getSessionManager()) {
+    public long merge(final User user) {
+        try (SessionManager sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                long byId = baseDao.merge(user);
+                long byId = userDao.merge(user);
                 log.log(Level.INFO, "merge.{}" + byId);
                 return byId;
             } catch (Exception e) {
