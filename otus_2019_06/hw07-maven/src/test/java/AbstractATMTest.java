@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.deft.homework.actions.CashMachineActions;
+import ru.deft.homework.actions.impl.AbstractATM;
 import ru.deft.homework.actions.impl.RubATM;
 import ru.deft.homework.actions.impl.UsdATM;
 import ru.deft.homework.constants.BanknoteDenominationUs;
@@ -13,14 +14,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AbstractATMTest {
 
-    private static CashMachineActions rubAtm;
-    private static CashMachineActions usdAtm;
+    private static AbstractATM rubAtm;
+    private static AbstractATM usdAtm;
 
     @BeforeEach
     void setUp() {
         Department department = new Department();
-        rubAtm = new RubATM(department);
-        usdAtm = new UsdATM(department);
+        rubAtm = new RubATM();
+        usdAtm = new UsdATM();
+        department.addSubscriber(rubAtm);
+        department.addSubscriber(usdAtm);
     }
 
     @Test

@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 // todo add some diffs between currency
 public class RubATM extends AbstractATM {
 
-    public RubATM(Department department) {
+    public RubATM() {
         super(CachMachineType.RUB, Arrays.stream(BanknoteDenominationRub.values())
-                .collect(Collectors.toMap(BanknoteDenominationRub::getDenomanation, el -> 0)), department);
+                .collect(Collectors.toMap(BanknoteDenominationRub::getDenomanation, el -> 0)));
     }
 }

@@ -5,7 +5,6 @@ import ru.deft.homework.chainofresp.ChainOfResp;
 import ru.deft.homework.chainofresp.CheckAvailableBill;
 import ru.deft.homework.chainofresp.CheckEnoughMoney;
 import ru.deft.homework.constants.CachMachineType;
-import ru.deft.homework.department.impl.Department;
 import ru.deft.homework.errors.CashMachineException;
 import ru.deft.homework.memento.History;
 import ru.deft.homework.memento.Memento;
@@ -21,7 +20,6 @@ import static ru.deft.homework.constants.Constants.YOU_HAVEN_T_ENOUGH_MONEY;
 public abstract class AbstractATM implements CashMachineActions, SubscriberResetState {
 
     private History history;
-    private Department department;
     private ChainOfResp chainOfResp;
     private final CachMachineType type;
     private Map<Integer, Integer> availableDenomination;
@@ -29,14 +27,13 @@ public abstract class AbstractATM implements CashMachineActions, SubscriberReset
     //todo use cells
     private Map<Integer, Integer> moneyCells = new HashMap<>();
 
-    protected AbstractATM(CachMachineType type, Map<Integer, Integer> availableDenomination, Department department) {
+    protected AbstractATM(CachMachineType type, Map<Integer, Integer> availableDenomination) {
         this.type = type;
         this.availableDenomination = availableDenomination;
         this.history = new History();
         ChainOfResp chainOfResp = new CheckEnoughMoney(this);
         chainOfResp.linkWith(new CheckAvailableBill(this));
         this.chainOfResp = chainOfResp;
-        this.department = department;
     }
 
     @Override
