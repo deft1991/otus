@@ -18,6 +18,7 @@
         <!--        <module>hw06-maven</module>-->
         <module>hw08-maven</module>
         <module>hw09-maven</module>
+        <module>hw07-maven</module>
     </modules>
 
     <description>Code examples</description>
@@ -30,9 +31,17 @@
 
 
     <properties>
-        <maven.compiler.target>8</maven.compiler.target>
-        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>12</maven.compiler.target>
+        <maven.compiler.source>12</maven.compiler.source>
         <guava.version>28.0-jre</guava.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <source>12</source>
+        <target>12</target>
+
+        <testSource>12</testSource>
+        <testTarget>12</testTarget>
+        <showWarnings>true</showWarnings>
+        <showDeprecation>true</showDeprecation>
     </properties>
 
     <dependencies>
