@@ -20,7 +20,7 @@ public class IoC {
     public static Object createProxyClass(Class clazz) {
         InvocationHandler printInvocationHandler = new MyLogInvocationHandler(clazz);
         fillLogableMethodSet(clazz);
-        return Proxy.newProxyInstance(IoC.class.getClassLoader(), new Class[] {PrintInterface.class}, printInvocationHandler);
+        return Proxy.newProxyInstance(IoC.class.getClassLoader(), new Class[]{PrintInterface.class}, printInvocationHandler);
 
     }
 
@@ -42,7 +42,8 @@ public class IoC {
             this.clazz = clazz;
         }
 
-        @Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             if (logableMethods.contains(clazz.getDeclaredMethod(method.getName(), method.getParameterTypes()))) {
                 printMethod(method, args);
                 return method.invoke(clazz.newInstance(), args);
@@ -55,7 +56,10 @@ public class IoC {
             System.out.println("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-");
             String argsToString = "";
             if (args != null) {
-                argsToString = Arrays.stream(args).map(Objects::toString).collect(Collectors.joining(", "));
+                argsToString = Arrays
+                        .stream(args)
+                        .map(Objects::toString)
+                        .collect(Collectors.joining(", "));
             }
             System.out.println(String.format(LOG_MSG, method.getName(), argsToString));
         }
