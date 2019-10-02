@@ -62,8 +62,11 @@ public abstract class AbstractATM implements CashMachineActions, SubscriberReset
     }
 
     private AtomicInteger getWithdrawAmount(int value) {
-        final Set<Integer> integers =
-                moneyCells.keySet().stream().sorted(Integer::compareTo).collect(Collectors.toCollection(LinkedHashSet::new));
+        final Set<Integer> integers = moneyCells
+                .keySet()
+                .stream()
+                .sorted(Integer::compareTo)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
         AtomicInteger amount = new AtomicInteger();
         int[] val = new int[]{value};
         integers.forEach(key -> {
@@ -82,7 +85,10 @@ public abstract class AbstractATM implements CashMachineActions, SubscriberReset
 
     @Override
     public int getBalance() {
-        final int sum = moneyCells.keySet().stream().mapToInt(key -> moneyCells.get(key) * key).sum();
+        final int sum = moneyCells
+                .keySet()
+                .stream()
+                .mapToInt(key -> moneyCells.get(key) * key).sum();
         System.out.println("Your amount is " + sum + " " + type);
         System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         return sum;
