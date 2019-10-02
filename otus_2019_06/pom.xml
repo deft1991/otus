@@ -19,6 +19,7 @@
         <module>hw08-maven</module>
         <module>hw09-maven</module>
         <module>hw07-maven</module>
+        <module>hw10-maven</module>
     </modules>
 
     <description>Code examples</description>
@@ -78,6 +79,11 @@
         </plugins>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.19</version>
