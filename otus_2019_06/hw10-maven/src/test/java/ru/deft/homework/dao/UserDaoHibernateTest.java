@@ -66,9 +66,7 @@ public class UserDaoHibernateTest extends AbstractHibernateTest {
             expectedUser.addPhone(new Phone("11-11"));
             expectedUser.addPhone(new Phone("22-22"));
         }
-        sessionManagerHibernate.beginSession();
-        long id = userDaoHibernate.save(expectedUser);
-        sessionManagerHibernate.commitSession();
+        long id = saveAndCommitUser(expectedUser);
 
         assertThat(id).isGreaterThan(0);
 
@@ -88,9 +86,7 @@ public class UserDaoHibernateTest extends AbstractHibernateTest {
         }
 
         expectedUser = new User(id, "Не Вася");
-        sessionManagerHibernate.beginSession();
-        long newId = userDaoHibernate.save(expectedUser);
-        sessionManagerHibernate.commitSession();
+        long newId = saveAndCommitUser(expectedUser);
 
         assertThat(newId).isGreaterThan(0).isEqualTo(id);
         actualUser = loadUser(newId);
@@ -128,5 +124,12 @@ public class UserDaoHibernateTest extends AbstractHibernateTest {
     @Test
     void getSessionManager() {
         assertThat(userDaoHibernate.getSessionManager()).isNotNull().isEqualTo(sessionManagerHibernate);
+    }
+
+    private long saveAndCommitUser(User expectedUser) {
+        sessionManagerHibernate.beginSession();
+        long id = userDaoHibernate.save(expectedUser);
+        sessionManagerHibernate.commitSession();
+        return id;
     }
 }
