@@ -7,7 +7,7 @@ import ru.deft.homework.api.model.Address;
 import ru.deft.homework.api.model.Phone;
 import ru.deft.homework.api.model.User;
 import ru.deft.homework.api.service.DbUserService;
-import ru.deft.homework.api.service.impl.DbServiceImpl;
+import ru.deft.homework.api.service.impl.DbUserServiceImpl;
 import ru.deft.homework.api.sessionmanager.SessionManager;
 import ru.deft.homework.hibernate.HibernateUtils;
 import ru.deft.homework.hibernate.dao.UserDaoHibernate;
@@ -25,7 +25,7 @@ public class Main {
                         Address.class);
         SessionManager sessionManagerHibernate = new SessionManagerHibernate(sessionFactory);
         UserDao userDao = new UserDaoHibernate(sessionManagerHibernate);
-        DbUserService dbService = new DbServiceImpl(userDao);
+        DbUserService dbService = new DbUserServiceImpl(userDao);
 
         long id = dbService.save(new User(0L, "Вася"));
         User mayBeCreatedUser = dbService.getById(id);

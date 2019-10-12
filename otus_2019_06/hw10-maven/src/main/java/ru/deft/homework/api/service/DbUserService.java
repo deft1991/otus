@@ -2,6 +2,8 @@ package ru.deft.homework.api.service;
 
 import ru.deft.homework.api.model.User;
 
+import java.util.List;
+
 public interface DbUserService {
 
     User getById(Long id);
@@ -11,4 +13,10 @@ public interface DbUserService {
     long update(User paramClass);
 
     long merge(User paramClass);
+
+    void commit();
+
+    User getByNameAndPassword(String name, String password);
+
+    List<User> findAll();
 }
