@@ -17,8 +17,8 @@ import ru.deft.homework.servlet.login.LoginServlet;
  * Created by sgolitsyn on 10/7/19
  */
 public class Main {
-    private static final int PORT = 8080;
     public static final String STATIC = "/static";
+    private static final int PORT = 8080;
     private static IoC ioC = new IoC();
 
 
@@ -29,21 +29,18 @@ public class Main {
     private void start() throws Exception {
 
         initUsers();
-
         ResourceHandler handler = new ResourceHandler();
         Resource resource = Resource.newClassPathResource(STATIC);
         handler.setBaseResource(resource);
 
-
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-// todo add servlets
+        UserServlet servlet = new UserServlet(ioC.getDoGetUserChain(), ioC.getDoPostUserChain());
         context.addServlet(
                 new ServletHolder(
-                        new UserServlet(ioC.getDbUserService()
-                                , ioC.getGson()
-                                , ioC.getTemplateProcessor())), "/user/*");
+                        servlet)
+                , "/user/*");
         context.addServlet(new ServletHolder(new LoginServlet(ioC.getUserService(), ioC.getTemplateProcessor())), "/login");
-        context.addFilter(new FilterHolder(new AuthorizationFilter()), "/admin/*", null);
+        context.addFilter(new FilterHolder(new AuthorizationFilter()), "/*", null);
 
         Server server = new Server(PORT);
         server.setHandler(new HandlerList(handler, context));

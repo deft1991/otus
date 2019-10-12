@@ -12,11 +12,7 @@ public class UserService {
 
     private final DbUserService dbUserService;
 
-    public boolean authenticate(String name, String password) {
-        User user = dbUserService.getByNameAndPassword(name, password);
-        if (user != null){
-            return true;
-        }
-        return false;
+    public User authenticate(String name, String password) {
+        return dbUserService.getByNameAndPassword(name, password);
     }
 }

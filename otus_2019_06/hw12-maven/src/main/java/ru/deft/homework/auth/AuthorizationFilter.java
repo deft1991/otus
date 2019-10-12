@@ -2,10 +2,11 @@ package ru.deft.homework.auth;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
 
 /*
  * Created by sgolitsyn on 10/9/19
@@ -24,17 +25,16 @@ public class AuthorizationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
-        HttpSession session = ((HttpServletRequest) servletRequest).getSession(false);
 
-        boolean isLoggedIn = (session != null && session.getAttribute("userAdmin") != null);
-        String loginUrl =  req.getContextPath() + "/admin/login";
+        boolean isLoggedIn = isLoggedIn(req);
+        String loginUrl = req.getContextPath() + "/login";
         boolean isLoginRequest = req.getRequestURI().equals(loginUrl);
         boolean isLoginPage = req.getRequestURI().endsWith("login.ftl");
 
         if (isLoggedIn && (isLoginRequest || isLoginPage)) {
             // the admin is already logged in and he's trying to login again
             // then forwards to the admin's homepage
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/user/all");
             dispatcher.forward(req, resp);
 
         } else if (isLoggedIn || isLoginRequest) {
@@ -45,18 +45,22 @@ public class AuthorizationFilter implements Filter {
         } else {
             // the admin is not logged in, so authentication is required
             // forwards to the Login page
-            RequestDispatcher dispatcher = req.getRequestDispatcher("login");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/login");
             dispatcher.forward(req, resp);
 
         }
+    }
 
-        String requestURI = req.getRequestURI();
-        System.out.println("Requested Resource:" + requestURI);
+    private boolean isLoggedIn(HttpServletRequest req) {
+        Cookie adminUser = null;
+        if (req.getCookies() != null) {
+            adminUser = Arrays
+                    .stream(req.getCookies())
+                    .filter(cookie -> cookie.getName().equals("adminUser"))
+                    .findFirst()
+                    .orElse(null);
 
-        if (session == null) {
-            resp.setStatus(403);
-        } else {
-            filterChain.doFilter(servletRequest, servletResponse);
         }
+        return adminUser != null;
     }
 }
