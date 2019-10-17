@@ -112,6 +112,24 @@ public class DbUserServiceImpl implements DbUserService {
     }
 
     @Override
+    public User getByName(String name) {
+        try (SessionManager sessionManager = userDao.getSessionManager()) {
+            sessionManager.beginSession();
+            try {
+                User user = userDao.getByName(name);
+                log.log(Level.INFO, "getById.{}" + user.toString());
+                return user;
+            } catch (Exception e) {
+                log.log(Level.SEVERE, e.getMessage());
+                sessionManager.rollbackSession();
+            }
+        } catch (Exception e) {
+            throw new DbServiceException(e);
+        }
+        return null;
+    }
+
+    @Override
     public List<User> findAll() {
         try (SessionManager sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();

@@ -18,5 +18,7 @@ public interface DbUserService {
 
     User getByNameAndPassword(String name, String password);
 
+    User getByName(String name);
+
     List<User> findAll();
 }
