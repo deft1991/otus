@@ -21,6 +21,8 @@
         <module>hw07-maven</module>
         <module>hw10-maven</module>
         <module>hw11-maven</module>
+        <module>hw12-maven</module>
+
     </modules>
 
     <description>Code examples</description>

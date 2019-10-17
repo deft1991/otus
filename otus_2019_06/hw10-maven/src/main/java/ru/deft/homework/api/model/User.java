@@ -21,6 +21,9 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
@@ -33,6 +36,18 @@ public class User {
         this.id = id;
         this.name = name;
     }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
+    public User(Long id, String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
+
 
     public void addPhone(Phone phone) {
         phones.add(phone);
