@@ -52,12 +52,7 @@ public class UserController {
     @PostMapping("/create_profile")
     public String createProfile(Model model, @RequestParam String name, @RequestParam String password) {
         User user = new User(name, password);
-        userService.save(user);
-        List<User> users = userService.findAll();
-        Map<String, Object> pageParams = new HashMap<>();
-        pageParams.put("users", users);
-        model.addAllAttributes(pageParams);
-        return "redirect:/user/all";
+        return getPageWithParams(model, user);
     }
 
     @PostMapping("/update_profile")
@@ -65,6 +60,10 @@ public class UserController {
         User user = userService.getById(Long.valueOf(userId));
         user.setName(name);
         user.setPassword(password);
+        return getPageWithParams(model, user);
+    }
+
+    private String getPageWithParams(Model model, User user) {
         userService.save(user);
         List<User> users = userService.findAll();
         Map<String, Object> pageParams = new HashMap<>();

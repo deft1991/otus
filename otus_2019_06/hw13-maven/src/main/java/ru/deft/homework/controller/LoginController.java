@@ -50,22 +50,4 @@ public class LoginController {
 
         return null;
     }
-
-//    @PostMapping(value = "/postLogin")
-//    public String postLogin(Model model, HttpSession session) {
-//        log.info("postLogin()");
-//        // read principal out of security context and set it to session
-//        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-//        validatePrinciple(authentication.getPrincipal());
-//        User loggedInUser = (User) authentication.getPrincipal();
-//        model.addAttribute("name", loggedInUser.getUsername());
-//        session.setAttribute("password", loggedInUser.getPassword());
-//        return "redirect:/successLoginPage";
-//    }
-//
-//    private void validatePrinciple(Object principal) {
-//        if (!(principal instanceof User)) {
-//            throw new  IllegalArgumentException("Principal can not be null!");
-//        }
-//    }
 }

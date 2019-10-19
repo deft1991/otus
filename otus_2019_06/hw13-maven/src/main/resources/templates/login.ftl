@@ -10,6 +10,11 @@
         <li><a href="/">Home</a></li>
     </ul>
 </nav>
+<nav role="navigation">
+    <ul>
+        <li><a href="/user/all">View all users</a></li>
+    </ul>
+</nav>
 
 <h1>Log in</h1>
 
