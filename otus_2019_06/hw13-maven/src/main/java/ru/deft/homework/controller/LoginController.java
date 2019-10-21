@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ru.deft.homework.api.model.User;
 import ru.deft.homework.service.LoginService;
 
 import javax.servlet.http.HttpSession;
@@ -46,8 +47,10 @@ public class LoginController {
     }
 
     @PostMapping
-    public String authenticate(ModelMap model, HttpSession session) {
+    public String authenticate(Model model, @RequestParam String name, @RequestParam String password) {
 
-        return null;
+        User authenticate = loginService.authenticate(name);
+        model.addAttribute("user", authenticate);
+        return "redirect:/user/all";
     }
 }
