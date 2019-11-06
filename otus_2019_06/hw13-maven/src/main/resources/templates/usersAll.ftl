@@ -45,7 +45,7 @@
                     <button>
                         <nav>
                             <ul>
-                                <li><a href="/user/edit_profile?userId=${user.id}">Edit</a></li>
+                                <li><a href=${springMacroRequestContext.getRequestUri()}user/edit_profile?userId=${user.id}>Edit</a></li>
                             </ul>
                         </nav>
                     </button>
@@ -59,7 +59,7 @@
     <button>
         <nav>
             <ul>
-                <li><a href="/user/create_profile">Create User</a></li>
+                <li><a href=${springMacroRequestContext.getRequestUri()}user/create_profile>Create User</a></li>
             </ul>
         </nav>
     </button>

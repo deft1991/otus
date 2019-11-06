@@ -7,12 +7,12 @@
 <body>
 <nav role="navigation">
     <ul>
-        <li><a href="/">Home</a></li>
+        <li><a href=${springMacroRequestContext.getRequestUri()}>Home</a></li>
     </ul>
 </nav>
 <nav role="navigation">
     <ul>
-        <li><a href="/user/all">View all users</a></li>
+        <li><a href=${springMacroRequestContext.getRequestUri()}user/all>View all users</a></li>
     </ul>
 </nav>
 

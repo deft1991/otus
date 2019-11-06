@@ -11,7 +11,7 @@
 <div>
     <nav>
         <ul>
-            <li><a href="/user/all">View all users</a></li>
+            <li><a href=${springMacroRequestContext.getRequestUri()}user/all>View all users</a></li>
         </ul>
     </nav>
 </div>

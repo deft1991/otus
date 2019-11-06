@@ -54,6 +54,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         var resolver = new FreeMarkerViewResolver();
         resolver.setCache(true);
+        resolver.setPrefix("/");
         resolver.setSuffix(".ftl");
         return resolver;
     }
