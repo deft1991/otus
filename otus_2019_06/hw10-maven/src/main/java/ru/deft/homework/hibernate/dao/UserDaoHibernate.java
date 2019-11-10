@@ -35,7 +35,7 @@ public class UserDaoHibernate implements UserDao {
         DbSessionHibernate session = (DbSessionHibernate) sessionManager.getCurrentSession();
         try {
             Session hibernateSession = session.getSession();
-            if (user.getId() == null || user.getId() < 0){
+            if (user.getId() == null || user.getId() <= 0){
                 user.setId(null);
                 hibernateSession.persist(user);
             }
@@ -79,6 +79,21 @@ public class UserDaoHibernate implements UserDao {
             Query sessionQuery = hibernateSession.createQuery(query);
             sessionQuery.setParameter("name", name);
             sessionQuery.setParameter("password", password);
+            return (User) sessionQuery.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public User getByName(String name) {
+        DbSessionHibernate session = (DbSessionHibernate) sessionManager.getCurrentSession();
+        try {
+            Session hibernateSession = session.getSession();
+            String query = "SELECT u FROM User u WHERE u.name= :name";
+            Query sessionQuery = hibernateSession.createQuery(query);
+            sessionQuery.setParameter("name", name);
             return (User) sessionQuery.getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
