@@ -12,7 +12,6 @@ public class Worker implements Runnable {
 //    public static final String THREAD_NAME_S_ATOMIC_INTEGER_D = " %d ";
     private AtomicInteger atomicInteger = new AtomicInteger(0);
     private AtomicBoolean isChanged = new AtomicBoolean(false);
-    private volatile int curValue = 0;
     private boolean isGrow = true;
 
     @Override
