@@ -17,7 +17,7 @@ public class MultiThreadingApp {
         HomeworkWriter homeworkLogic = new HomeworkWriter(0, new ReentrantLock());
 
         executorService.submit(homeworkLogic::work);
-        executorService.submit(homeworkLogic::print);
+        executorService.submit(homeworkLogic::work);
 
         executorService.shutdown();
         executorService.awaitTermination(60, TimeUnit.SECONDS);
