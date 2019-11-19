@@ -2,7 +2,6 @@ package ru.deft.homework.decorator;
 
 import ru.deft.homework.api.model.User;
 import ru.deft.homework.api.service.DbUserService;
-import ru.deft.homework.api.service.impl.DbServiceImpl;
 import ru.deft.homework.cache.HwListener;
 import ru.deft.homework.cache.impl.MyCache;
 
@@ -21,7 +20,7 @@ public class DbServiceImplDecoratorWithCache extends BaseDecorator {
         myCache.addListener(hwListener);
     }
 
-    public DbServiceImplDecoratorWithCache(DbServiceImpl dbService, MyCache<Long, User> myCache) {
+    public DbServiceImplDecoratorWithCache(DbUserService dbService, MyCache<Long, User> myCache) {
         super(dbService);
         this.myCache = myCache;
     }

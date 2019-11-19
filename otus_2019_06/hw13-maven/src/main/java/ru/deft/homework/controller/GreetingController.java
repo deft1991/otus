@@ -4,6 +4,7 @@ import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 /*
  * Created by sgolitsyn on 10/16/19
  */
@@ -17,4 +18,8 @@ public class GreetingController {
         return "index";
     }
 
+    @GetMapping(value = "/webSocket")
+    public String webSocket() {
+        return "webSocket";
+    }
 }
