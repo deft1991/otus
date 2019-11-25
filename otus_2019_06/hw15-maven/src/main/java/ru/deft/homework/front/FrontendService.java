@@ -15,5 +15,6 @@ public interface FrontendService {
 
     void setMsClient(MsClient msClient);
 
+    void getUserData(String from, String content, Consumer<Message> dataConsumer);
 }
 

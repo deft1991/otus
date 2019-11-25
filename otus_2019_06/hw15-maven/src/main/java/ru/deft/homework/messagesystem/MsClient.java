@@ -17,4 +17,5 @@ public interface MsClient {
 
   void setMessageSystem(MessageSystem messageSystem);
 
+  Message produceMessage(String databaseServiceClientName, String from, String content, MessageType userData);
 }

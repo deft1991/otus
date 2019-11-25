@@ -75,6 +75,12 @@ public class MsClientImpl implements MsClient {
         }
     }
 
+    @Override
+    public Message produceMessage(String to, String from, String content, MessageType userData) {
+        return new Message(name, to, userData.getValue(), content);
+
+    }
+
 
     @Override
     public boolean equals(Object o) {

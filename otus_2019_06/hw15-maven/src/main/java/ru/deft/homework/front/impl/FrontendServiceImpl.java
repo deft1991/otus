@@ -51,4 +51,11 @@ public class FrontendServiceImpl implements FrontendService {
     public void setMsClient(MsClient msClient) {
         this.msClient = msClient;
     }
+
+    @Override
+    public void getUserData(String from, String content, Consumer<Message> dataConsumer) {
+        Message outMsg = msClient.produceMessage(databaseServiceClientName, from, content, MessageType.USER_DATA);
+        consumerMap.put(outMsg.getId(), dataConsumer);
+        msClient.sendMessage(outMsg);
+    }
 }

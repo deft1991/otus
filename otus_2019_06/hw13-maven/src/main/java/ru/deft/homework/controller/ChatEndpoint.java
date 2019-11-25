@@ -51,7 +51,7 @@ public class ChatEndpoint {
         message.setFrom(users.get(session.getId()));
         msClientConfig
                 .getFrontendService()
-                .getUserData(1, ChatEndpoint::broadcast);
+                .getUserData(message.getFrom(), message.getContent(), ChatEndpoint::broadcast);
 
 //        broadcast(message);
     }

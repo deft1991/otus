@@ -73,6 +73,19 @@
             <version>${org.springframework.version}</version>
         </dependency>
 
+        <!-- Modules -->
+        <dependency>
+            <groupId>homework.deft</groupId>
+            <artifactId>hw12-maven</artifactId>
+            <version>1.0-SNAPSHOT</version>
+<!--            <exclusions>-->
+<!--                <exclusion>  &lt;!&ndash; declare the exclusion here &ndash;&gt;-->
+<!--                    <groupId>org.hibernate</groupId>-->
+<!--                    <artifactId>hibernate-annotations</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+        </dependency>
+        <!--         -->
     </dependencies>
 
     <build>
