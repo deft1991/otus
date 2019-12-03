@@ -1,6 +1,7 @@
 package ru.deft.telegrambot.service;
 
 
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.deft.telegrambot.model.Anonymous;
 
@@ -12,6 +13,7 @@ import java.util.stream.Stream;
 /*
  * Created by sgolitsyn on 11/22/19
  */
+@Component
 public final class AnonymousService {
 
     private final Set<Anonymous> mAnonymouses;

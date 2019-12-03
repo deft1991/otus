@@ -1,7 +1,6 @@
 package ru.deft.telegrambot.command;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.Level;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;

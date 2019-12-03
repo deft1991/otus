@@ -1,6 +1,5 @@
 package ru.deft.telegrambot.bot;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
@@ -15,6 +14,7 @@ import ru.deft.telegrambot.command.MyNameCommand;
 import ru.deft.telegrambot.command.SetNameCommand;
 import ru.deft.telegrambot.command.StartCommand;
 import ru.deft.telegrambot.command.StopCommand;
+import ru.deft.telegrambot.config.BotConfig;
 import ru.deft.telegrambot.model.Anonymous;
 import ru.deft.telegrambot.service.AnonymousService;
 
