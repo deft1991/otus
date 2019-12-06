@@ -9,7 +9,7 @@ import ru.deft.homework.api.model.Address;
 import ru.deft.homework.api.model.Phone;
 import ru.deft.homework.api.model.User;
 import ru.deft.homework.api.service.DbUserService;
-import ru.deft.homework.api.service.impl.DbServiceImpl;
+import ru.deft.homework.api.service.impl.DbUserServiceImpl;
 import ru.deft.homework.api.sessionmanager.SessionManager;
 import ru.deft.homework.cache.impl.MyCache;
 import ru.deft.homework.decorator.DbServiceDecoratorWithSlowData;
@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicLongArray;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /*
  * Created by sgolitsyn on 10/12/19
@@ -46,7 +46,7 @@ class DbServiceImplDecoratorWithCacheTest {
         sessionFactory = HibernateUtils.buildSessionFactory(HIBERNATE_CFG_XML_FILE_RESOURCE, User.class, Address.class, Phone.class);
         sessionManagerHibernate = new SessionManagerHibernate(sessionFactory);
         userDao = new UserDaoHibernate(sessionManagerHibernate);
-        DbUserService dbService = new DbServiceImpl(userDao);
+        DbUserService dbService = new DbUserServiceImpl(userDao);
         dbServiceDecoratorWithSlowData = new DbServiceDecoratorWithSlowData(dbService);
         dbUserServiceWithCache = new DbServiceImplDecoratorWithCache(dbService);
     }
@@ -91,7 +91,7 @@ class DbServiceImplDecoratorWithCacheTest {
 
     private List<User> getUsers(String... names) {
         List<User> users = new ArrayList<>();
-        for (String name : names){
+        for (String name : names) {
             users.add(new User(0L, name));
         }
         return users;

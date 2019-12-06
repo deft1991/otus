@@ -14,6 +14,12 @@
             <li><a href=${springMacroRequestContext.getRequestUri()}login>Log In</a></li>
         </ul>
     </nav>
+    <br/>
+    <nav role="navigation">
+        <ul>
+            <li><a href=${springMacroRequestContext.getRequestUri()}webSocket>WebSocket</a></li>
+        </ul>
+    </nav>
 
 </div>
 </body>
