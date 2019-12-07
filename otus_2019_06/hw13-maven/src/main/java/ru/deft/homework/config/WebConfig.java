@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
@@ -16,7 +15,6 @@ import ru.deft.homework.api.service.impl.DbUserServiceImpl;
 import ru.deft.homework.api.sessionmanager.SessionManager;
 import ru.deft.homework.hibernate.dao.UserDaoHibernate;
 import ru.deft.homework.hibernate.sessionmanager.SessionManagerHibernate;
-import ru.deft.homework.service.impl.UserDetailsServiceImpl;
 
 /*
  * Created by sgolitsyn on 10/14/19
