@@ -8,7 +8,6 @@ import ru.deft.homework.rmi.DBServiceEcho;
 import javax.naming.NamingException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collections;
 
@@ -20,24 +19,20 @@ import java.util.Collections;
 public class DBServiceServer extends UnicastRemoteObject implements DBServiceEcho {
     private static final long serialVersionUID = 1L;
 
-    private static final int SERVER_PORT = 8083;
-    private static final int REGISTRY_PORT = 1099;
-
+    private static final int SERVER_PORT = 8082;
 
     public DBServiceServer() throws RemoteException {
-        super(SERVER_PORT);
+        super(8092);
     }
-
 
     @Override
-    public String echo(String data) {
-        log.info("data from client:{}", data);
-        return "DBServiceServer echo:" + data;
-
+    public String requestToDBService(String from, String message) throws RemoteException {
+        // todo add save to data base or some logic
+        log.info("data from {} client:{}", from, message);
+        return message + "--> From DBServiceServer.requestToDBService";
     }
 
-    public static void main(String[] args) throws NamingException {
-
+    public static void main(String[] args) throws NamingException, RemoteException {
         try {
             Naming.rebind("//localhost/DBServiceServer", new DBServiceServer());
             log.info("waiting for client connection");
@@ -46,7 +41,7 @@ public class DBServiceServer extends UnicastRemoteObject implements DBServiceEch
         }
         SpringApplication springApplication = new SpringApplication(DBServiceServer.class);
         springApplication.setDefaultProperties(Collections
-                .singletonMap("server.port", "8082"));
+                .singletonMap("server.port", SERVER_PORT));
         springApplication.run(args);
     }
 

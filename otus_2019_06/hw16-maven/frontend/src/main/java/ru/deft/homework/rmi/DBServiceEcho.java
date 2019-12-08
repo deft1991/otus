@@ -8,6 +8,6 @@ import java.rmi.RemoteException;
  */
 public interface DBServiceEcho extends Remote {
 
-    String echo(String data) throws RemoteException;
+    String requestToDBService(String from, String message) throws RemoteException;
 
 }

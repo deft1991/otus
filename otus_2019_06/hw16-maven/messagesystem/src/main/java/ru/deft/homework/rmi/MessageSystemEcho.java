@@ -8,6 +8,6 @@ import java.rmi.RemoteException;
  */
 public interface MessageSystemEcho extends Remote {
 
-    String echo(String data) throws RemoteException;
+    String requestToMessageSystem(String from, String message) throws RemoteException;
 
 }

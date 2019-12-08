@@ -1,8 +1,7 @@
-package ru.deft.homework.client;
+package ru.deft.homework.client.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
-import ru.deft.homework.rmi.FrontendEcho;
+import ru.deft.homework.rmi.MessageSystemEcho;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -10,17 +9,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 /*
+ * For test
  * Created by sgolitsyn on 12/6/19
  */
 @Slf4j
-public class FrontendClient {
+public class MessageSystemClientTest {
 
     public static void main(String[] args) throws RemoteException, MalformedURLException, NotBoundException {
-
-        var frontendEcho = (FrontendEcho) Naming.lookup("//localhost/FrontendServer");
-        var dataFromServer = frontendEcho.echo("hello");
+        MessageSystemEcho echoInterface = (MessageSystemEcho) Naming.lookup("rmi://localhost/MessageSystemServer");
+        var dataFromServer = echoInterface.requestToMessageSystem("from", "message");
         log.info("response from the server:{}", dataFromServer);
-
-
     }
 }
