@@ -16,8 +16,8 @@ import static ru.deft.homework.constants.Constants.YOU_HAVEN_T_ENOUGH_MONEY;
 
 public class AbstractATM implements CashMachineActions {
 
-    CachMachineType type;
-    Map<Integer, Integer> availableDenomination;
+    protected CachMachineType type;
+    protected Map<Integer, Integer> availableDenomination;
 
     //todo use cells
     private Map<Integer, Integer> moneyCells = new HashMap<>();
