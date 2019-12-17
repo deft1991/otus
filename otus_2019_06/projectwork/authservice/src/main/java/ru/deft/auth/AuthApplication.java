@@ -7,10 +7,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@SpringBootApplication
+//@SpringBootApplication
 @EnableAuthorizationServer
+//@EnableResourceServer
+//@RestController
+
+@SpringBootApplication
 @EnableResourceServer
-@RestController
 public class AuthApplication {
 
     public static void main(String[] args) {

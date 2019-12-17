@@ -2,6 +2,7 @@ package ru.deft.auth.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -15,17 +16,18 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import java.util.Base64;
-
 /*
  * Created by sgolitsyn on 12/11/19
  */
 @Configuration
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
-    //    @Value("${security.client-id}")
+    @Value("${user.oauth.clientId}")
     private final String clientid = "auth-service";
-    //    @Value("${security.client-secret}")
+    @Value("${user.oauth.clientSecret}")
     private final String clientSecret = "my-secret-key";
+    @Value("${user.oauth.redirectUris}")
+    private String RedirectURLs;
+
     //    @Value("${security.private-key}")
     private final String privateKey = "-----BEGIN RSA PRIVATE KEY-----\n" +
             "MIIEogIBAAKCAQEAv8c7eHlMeVcaXCArZLZtKWZpm61hqqVLtk3wMG+pkqSwoSw3\n" +
@@ -69,7 +71,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Bean
     public JwtAccessTokenConverter tokenEnhancer() {
@@ -104,14 +106,26 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+        security
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()");
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().withClient(clientid).secret(passwordEncoder.encode(clientSecret)).scopes("read", "write")
-                .authorizedGrantTypes("password", "refresh_token").accessTokenValiditySeconds(20000)
-                .refreshTokenValiditySeconds(20000);
+//        clients.inMemory().withClient(clientid).secret(passwordEncoder.encode(clientSecret)).scopes("read", "write")
+//                .authorizedGrantTypes("password", "refresh_token").accessTokenValiditySeconds(20000)
+//                .refreshTokenValiditySeconds(20000);
+
+        clients.inMemory()
+                .withClient("SampleClientId")
+                .secret(passwordEncoder.encode("secret"))
+//                .authorizedGrantTypes("authorization_code")
+                .authorizedGrantTypes("authorization_code")
+                .scopes("user_info")
+                .autoApprove(true)
+                .redirectUris(
+                        "http://localhost:8082/ui/login","http://localhost:8083/ui2/login");
 
     }
 }
