@@ -1,32 +1,3 @@
-#server:
-#  port: 8082
-#  session:
-#    cookie:
-#      name: UISESSION
-#
-#security:
-#  oauth2:
-#    client:
-#      registration:
-#        custom-client:
-#          client-id: auth-service
-#          client-secret: my-secret-key
-#          client-name: Auth Server
-#          scope: user_info
-#          provider: custom-provider
-#          redirect-uri: http://localhost:8082/login/oauth2/code/
-#          client-authentication-method: basic
-#          authorization-grant-type: authorization_code
-#      provider:
-#        custom-provider:
-#          token-uri: http://localhost:8081/auth/oauth/token
-#          authorization-uri: http://localhost:8081/auth/oauth/authorize
-#          user-info-uri: http://localhost:8081/auth/user/me
-#          user-name-attribute: name
-#spring:
-#  thymeleaf:
-#    cache: false
-
 server:
   port: 8082
   servlet:
@@ -48,3 +19,16 @@ security:
 spring:
   thymeleaf:
     cache: false
+  datasource:
+    url: jdbc:h2:mem:backendBd
+    driverClassName: org.h2.Driver
+    username: sa
+    password: sa
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true

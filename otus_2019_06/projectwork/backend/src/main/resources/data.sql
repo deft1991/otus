@@ -1,0 +1,2 @@
+INSERT INTO NEWS (ID, USER_NAME, NEWS_TEXT, CREATED_DATE, CREATED_BY)
+VALUES ('C94807CA-24FD-4516-9946-B5A801E0926A', 'example@gmail.com', 'news text bla bla bla', NOW(), 'deft');
