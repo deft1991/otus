@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Add Person</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
@@ -16,23 +16,23 @@
 
 <form th:action="@{/news}"
       th:object="${newsDto}" method="POST">
-    First Name:
-    <input type="text" th:field="*{firstName}" />
+    News text:
+    <input type="text" th:field="*{newsText}"/>
     <br/>
-    Last Name:
-    <input type="text" th:field="*{lastName}" />
+<!--    Last Name:-->
+    <input type="text" th:field="*{lastName}"/>
     <br/>
-    <input type="submit" value="Create" />
+    <input type="submit" value="Create"/>
 </form>
 
 <br/>
 
 <!-- Check if errorMessage is not null and not empty -->
 
-<div th:if="${errorMessage}" th:utext="${errorMessage}"
-     style="color:red;font-style:italic;">
-    ...
-</div>
+<!--<div th:if="${errorMessage}" th:utext="${errorMessage}"-->
+<!--     style="color:red;font-style:italic;">-->
+<!--    ...-->
+<!--</div>-->
 
 </body>
 </html>

@@ -1,8 +1,8 @@
 package ru.deft.backend.model;
 
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
@@ -19,16 +19,21 @@ import java.util.UUID;
  */
 
 @MappedSuperclass
+@NoArgsConstructor
 public class BaseEntity {
+    //    @Id
+//    @GeneratedValue(generator = "UUID")
+//    @GenericGenerator(
+//            name = "UUID",
+//            strategy = "org.hibernate.id.UUIDGenerator",
+//            parameters = {@Parameter(name = "uuid_gen_strategy_class",
+//                    value = "org.hibernate.id.uuid.CustomVersionOneStrategy")}
+//    )
+//    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "CHAR(32)")
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator",
-            parameters = {@Parameter(name = "uuid_gen_strategy_class",
-                    value = "org.hibernate.id.uuid.CustomVersionOneStrategy")}
-    )
-    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
     @CreationTimestamp

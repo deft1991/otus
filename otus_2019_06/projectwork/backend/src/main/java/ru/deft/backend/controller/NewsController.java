@@ -1,6 +1,5 @@
 package ru.deft.backend.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +14,6 @@ import ru.deft.backend.model.News;
 import ru.deft.backend.service.NewsService;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.UUID;
 
 /*
@@ -39,6 +37,11 @@ public class NewsController {
         Iterable<News> allNews = newsService.getAllNews();
         model.addAttribute("newsList", allNews);
         return "newsList.html";
+    }
+
+    @GetMapping("/addNews")
+    public String getNews(Model model, Principal principal) {
+        return "addNews.html";
     }
 
     @PostMapping

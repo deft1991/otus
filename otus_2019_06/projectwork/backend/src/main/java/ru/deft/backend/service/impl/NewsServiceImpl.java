@@ -7,7 +7,6 @@ import ru.deft.backend.model.News;
 import ru.deft.backend.repository.NewsRepository;
 import ru.deft.backend.service.NewsService;
 
-import java.util.List;
 import java.util.UUID;
 
 /*

@@ -23,8 +23,8 @@ public class News extends BaseEntity {
     @Column(name = "NEWS_TEXT", nullable = false)
     private String newsText;
     @Column(name = "LIKE_COUNT")
-    private int likeCount;
+    private Integer likeCount;
     @Column(name = "DISLIKE")
-    private int disLike;
+    private Integer disLike;
 
 }

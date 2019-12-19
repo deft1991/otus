@@ -1,6 +1,8 @@
+DROP TABLE IF EXISTS NEWS;
+
 create table NEWS
 (
-    ID varchar(36) not null,
+    ID BINARY(36) not null,
     USER_NAME varchar(255) not null,
     NEWS_TEXT varchar(2000) not null,
     LIKE_COUNT int null,
