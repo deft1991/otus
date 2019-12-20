@@ -7,6 +7,7 @@ import ru.deft.backend.model.News;
 import ru.deft.backend.repository.NewsRepository;
 import ru.deft.backend.service.NewsService;
 
+import java.security.Principal;
 import java.util.UUID;
 
 /*
@@ -20,8 +21,11 @@ public class NewsServiceImpl implements NewsService {
 
 
     @Override
-    public UUID createNews(NewsDto dto) {
-        return null;
+    public UUID createNews(NewsDto dto, Principal principal) {
+        News entity = dto.toEntity();
+        entity.setCreatedBy(principal.getName());
+        News news = newsRepository.save(entity);
+        return news.getId();
     }
 
     @Override

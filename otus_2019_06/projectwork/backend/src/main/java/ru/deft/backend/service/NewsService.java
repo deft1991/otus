@@ -3,6 +3,7 @@ package ru.deft.backend.service;
 import ru.deft.backend.dto.NewsDto;
 import ru.deft.backend.model.News;
 
+import java.security.Principal;
 import java.util.UUID;
 
 /*
@@ -10,7 +11,7 @@ import java.util.UUID;
  */
 public interface NewsService {
 
-    UUID createNews(NewsDto dto);
+    UUID createNews(NewsDto dto, Principal principal);
 
     UUID updateNews(NewsDto dto);
 

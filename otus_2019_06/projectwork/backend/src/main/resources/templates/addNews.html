@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Add Person</title>
+    <meta charset="UTF-8" />
+    <title>Add News</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
@@ -14,25 +14,25 @@
    would be @{/edit.html}
    -->
 
-<form th:action="@{/news}"
-      th:object="${newsDto}" method="POST">
+<form th:action="@{addNews}"
+      th:object="${newsForm}" method="POST">
     News text:
-    <input type="text" th:field="*{newsText}"/>
+    <input type="text" th:field="*{newsText}" />
     <br/>
 <!--    Last Name:-->
-    <input type="text" th:field="*{lastName}"/>
-    <br/>
-    <input type="submit" value="Create"/>
+<!--    <input type="text" th:field="*{lastName}" />-->
+<!--    <br/>-->
+    <input type="submit" value="Create" />
 </form>
 
 <br/>
 
 <!-- Check if errorMessage is not null and not empty -->
 
-<!--<div th:if="${errorMessage}" th:utext="${errorMessage}"-->
-<!--     style="color:red;font-style:italic;">-->
-<!--    ...-->
-<!--</div>-->
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
+     style="color:red;font-style:italic;">
+    ...
+</div>
 
 </body>
 </html>

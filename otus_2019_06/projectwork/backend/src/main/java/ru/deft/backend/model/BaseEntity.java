@@ -1,6 +1,8 @@
 package ru.deft.backend.model;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,6 +20,8 @@ import java.util.UUID;
  * Created by sgolitsyn on 12/17/19
  */
 
+@Getter
+@Setter
 @MappedSuperclass
 @NoArgsConstructor
 public class BaseEntity {
@@ -51,4 +55,11 @@ public class BaseEntity {
     private String lastModifiedBy;
 
 
+    public void setCreatedBy(String createdBy) {
+        if (createdBy == null || createdBy.equals("")){
+            createdBy = "base user";
+        } else {
+            this.createdBy = createdBy;
+        }
+    }
 }
