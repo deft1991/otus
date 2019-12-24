@@ -65,4 +65,9 @@ public class NewsController {
     public UUID updateNews(@RequestBody NewsDto newsDto) {
         return newsService.updateNews(newsDto);
     }
+
+    @PutMapping("/publish")
+    News geNewsForPublish() {
+        return newsService.geNewsForPublish();
+    }
 }

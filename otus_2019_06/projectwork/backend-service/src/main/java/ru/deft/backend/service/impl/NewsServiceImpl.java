@@ -42,4 +42,12 @@ public class NewsServiceImpl implements NewsService {
     public Iterable<News> getAllNews() {
         return newsRepository.findAll();
     }
+
+    @Override
+    public News geNewsForPublish() {
+        News news = newsRepository.geNewsForPublish();
+        news.setPublished(true);
+        News save = newsRepository.save(news);
+        return save;
+    }
 }

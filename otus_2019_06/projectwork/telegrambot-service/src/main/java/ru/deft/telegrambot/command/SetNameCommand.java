@@ -8,8 +8,12 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
+import ru.deft.telegrambot.feign.client.AuthFeignClient;
+import ru.deft.telegrambot.model.authservice.UserEntity;
 import ru.deft.telegrambot.service.AnonymousService;
 import ru.deft.telegrambot.utils.GetTextFromTelegramMessage;
+
+import java.util.Base64;
 
 /*
  * Created by sgolitsyn on 11/22/19
@@ -19,12 +23,14 @@ import ru.deft.telegrambot.utils.GetTextFromTelegramMessage;
 public final class SetNameCommand extends AnonymizerCommand {
 
     public static final String LOG_COMMAND_WITH_USER_ID_AND_COMMAND_IDENTIFIER = "Start execute command %s : %s, userId: %s, commandIdentifier: %s";
-    private final AnonymousService mAnonymouses;
+    private final AnonymousService anonymousService;
+    private final AuthFeignClient authFeignClient;
 
     @Autowired
-    public SetNameCommand(@Qualifier("AnonymousService") AnonymousService anonymouses) {
+    public SetNameCommand(@Qualifier("AnonymousService") AnonymousService anonymouses, AuthFeignClient authFeignClient) {
         super("set_name", "set or change name that will be displayed with your messages\n");
-        mAnonymouses = anonymouses;
+        this.anonymousService = anonymouses;
+        this.authFeignClient = authFeignClient;
     }
 
     @Override
@@ -35,7 +41,7 @@ public final class SetNameCommand extends AnonymizerCommand {
         SendMessage message = new SendMessage();
         message.setChatId(chat.getId().toString());
 
-        if (!mAnonymouses.hasAnonymous(user)) {
+        if (!anonymousService.hasAnonymous(user)) {
             log.info(String.format("User id = %s  is trying to execute '%s' without starting the bot!", user.getId(), getCommandIdentifier()));
             message.setText("Firstly you should start the bot! Execute '/start' command!");
             execute(absSender, message, user);
@@ -53,18 +59,16 @@ public final class SetNameCommand extends AnonymizerCommand {
 
         StringBuilder sb = new StringBuilder();
 
-        if (mAnonymouses.setUserDisplayedName(user, displayedName)) {
+        if (anonymousService.setUserDisplayedName(user, displayedName)) {
 
-            if (mAnonymouses.getDisplayedName(user) == null) {
+            if (anonymousService.getDisplayedName(user) == null) {
                 log.info(String.format("User id = %s set a name '%s'", user.getId(), displayedName));
                 sb.append("Your displayed name: '").append(displayedName)
                         .append("'. Now you can send messages to bot!");
             } else {
                 log.info(String.format("Try to save new user via feign client: user id = %s, name = %s", user.getId(), displayedName));
-//                authFeignClient.createUser(new UserEntity(){{
-//                    setUsername(displayedName);
-//                    setPassword(Base64.getEncoder().encodeToString("password".getBytes()));
-//                }});
+                UserEntity userEntity = new UserEntity(displayedName, Base64.getEncoder().encodeToString("password".getBytes()));
+                authFeignClient.createUser(userEntity);
                 log.info(String.format("User id = %s has changed name to '%s'", user.getId(), displayedName));
                 sb.append("Your new displayed name: '").append(displayedName).append("'.");
             }

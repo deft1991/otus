@@ -18,4 +18,6 @@ public interface NewsService {
     News getNewsById(UUID id);
 
     Iterable<News> getAllNews();
+
+    News geNewsForPublish();
 }
