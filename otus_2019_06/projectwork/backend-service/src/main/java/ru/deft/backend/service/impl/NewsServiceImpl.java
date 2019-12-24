@@ -3,6 +3,7 @@ package ru.deft.backend.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.deft.backend.dto.NewsDto;
+import ru.deft.backend.dto.RecommendDto;
 import ru.deft.backend.model.News;
 import ru.deft.backend.repository.NewsRepository;
 import ru.deft.backend.service.NewsService;
@@ -47,7 +48,11 @@ public class NewsServiceImpl implements NewsService {
     public News geNewsForPublish() {
         News news = newsRepository.geNewsForPublish();
         news.setPublished(true);
-        News save = newsRepository.save(news);
-        return save;
+        return newsRepository.save(news);
+    }
+
+    @Override
+    public void recommendNews(RecommendDto recommendDto) {
+        newsRepository.save(recommendDto.toNewsEntity());
     }
 }

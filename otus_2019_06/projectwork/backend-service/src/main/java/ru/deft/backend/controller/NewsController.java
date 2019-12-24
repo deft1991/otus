@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.deft.backend.dto.NewsDto;
 import ru.deft.backend.dto.NewsForm;
+import ru.deft.backend.dto.RecommendDto;
 import ru.deft.backend.model.News;
 import ru.deft.backend.service.NewsService;
 
@@ -69,5 +70,10 @@ public class NewsController {
     @PutMapping("/publish")
     News geNewsForPublish() {
         return newsService.geNewsForPublish();
+    }
+
+    @PostMapping("/recommend")
+    void recommendNews(@RequestBody RecommendDto recommendDto) {
+        newsService.recommendNews(recommendDto);
     }
 }

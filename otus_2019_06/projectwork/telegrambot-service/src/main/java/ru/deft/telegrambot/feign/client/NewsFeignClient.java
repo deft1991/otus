@@ -3,6 +3,7 @@ package ru.deft.telegrambot.feign.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ru.deft.telegrambot.dto.RecommendDto;
 import ru.deft.telegrambot.feign.config.FeignClientConfig;
 import ru.deft.telegrambot.model.backendservice.News;
 
@@ -14,4 +15,7 @@ public interface NewsFeignClient {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/news/publish")
     News geNewsForPublish();
+
+    @RequestMapping(method = RequestMethod.POST, value = "/news/recommend")
+    void recommendNews(RecommendDto recommendDto);
 }

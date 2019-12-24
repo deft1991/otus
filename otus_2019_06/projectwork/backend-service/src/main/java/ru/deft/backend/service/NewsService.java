@@ -1,6 +1,7 @@
 package ru.deft.backend.service;
 
 import ru.deft.backend.dto.NewsDto;
+import ru.deft.backend.dto.RecommendDto;
 import ru.deft.backend.model.News;
 
 import java.security.Principal;
@@ -20,4 +21,6 @@ public interface NewsService {
     Iterable<News> getAllNews();
 
     News geNewsForPublish();
+
+    void recommendNews(RecommendDto recommendDto);
 }

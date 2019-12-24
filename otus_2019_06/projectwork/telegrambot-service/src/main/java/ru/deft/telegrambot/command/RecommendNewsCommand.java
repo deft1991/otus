@@ -8,6 +8,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
+import ru.deft.telegrambot.dto.RecommendDto;
+import ru.deft.telegrambot.feign.client.NewsFeignClient;
 import ru.deft.telegrambot.service.AnonymousService;
 import ru.deft.telegrambot.utils.GetTextFromTelegramMessage;
 
@@ -21,11 +23,14 @@ public class RecommendNewsCommand extends AnonymizerCommand {
     public static final String LOG_RECOMMEND_COMMAND = "Start execute command %s with user: id = %s name = %s, commandIdentifier: %s";
 
     private final AnonymousService mAnonymouses;
+    private final NewsFeignClient newsFeignClient;
 
     @Autowired
-    public RecommendNewsCommand(@Qualifier("AnonymousService") AnonymousService mAnonymouses) {
+    public RecommendNewsCommand(@Qualifier("AnonymousService") AnonymousService mAnonymouses
+            , NewsFeignClient newsFeignClient) {
         super("recommend", "recommend news for post in all chats\n");
         this.mAnonymouses = mAnonymouses;
+        this.newsFeignClient = newsFeignClient;
     }
 
 
@@ -50,6 +55,9 @@ public class RecommendNewsCommand extends AnonymizerCommand {
         }
 
         String newsText = GetTextFromTelegramMessage.getText(arguments);
+        newsFeignClient.recommendNews(new RecommendDto(newsText, user.getFirstName()));
 
+        message.setText("You`ve recommended news! Congratulations!");
+        execute(absSender, message, user);
     }
 }
