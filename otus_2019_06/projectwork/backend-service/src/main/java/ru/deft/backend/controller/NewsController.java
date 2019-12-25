@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.deft.backend.dto.NewsDto;
 import ru.deft.backend.dto.NewsForm;
@@ -25,7 +26,6 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/news")
-//@RequiredArgsConstructor
 public class NewsController {
 
     @Autowired
@@ -68,12 +68,14 @@ public class NewsController {
     }
 
     @PutMapping("/publish")
-    News geNewsForPublish() {
+    public News geNewsForPublish() {
         return newsService.geNewsForPublish();
     }
 
     @PostMapping("/recommend")
-    void recommendNews(@RequestBody RecommendDto recommendDto) {
+    @ResponseBody
+    public Boolean recommendNews(@RequestBody RecommendDto recommendDto) {
         newsService.recommendNews(recommendDto);
+        return true;
     }
 }
