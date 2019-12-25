@@ -25,6 +25,7 @@
         <module>hw13-maven</module>
         <module>hw14-maven</module>
         <module>hw15-maven</module>
+        <module>hw16-maven</module>
     </modules>
 
     <description>Code examples</description>

@@ -1,4 +1,4 @@
-package ru.deft.homework.controller;
+package ru.deft.homework.websocket.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;

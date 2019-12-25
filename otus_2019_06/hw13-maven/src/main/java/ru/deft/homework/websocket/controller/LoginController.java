@@ -1,4 +1,4 @@
-package ru.deft.homework.controller;
+package ru.deft.homework.websocket.controller;
 
 /*
  * Created by sgolitsyn on 10/15/19
@@ -8,12 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.deft.homework.api.model.User;
 import ru.deft.homework.service.LoginService;
-
-import javax.servlet.http.HttpSession;
 
 @Log
 @Controller
