@@ -15,7 +15,7 @@ import ru.deft.telegrambot.service.AnonymousService;
  */
 @Slf4j
 @Component("MyNameCommand")
-public final class MyNameCommand extends AnonymizerCommand {
+public class MyNameCommand extends AnonymizerCommand {
 
     private final AnonymousService mAnonymouses;
 

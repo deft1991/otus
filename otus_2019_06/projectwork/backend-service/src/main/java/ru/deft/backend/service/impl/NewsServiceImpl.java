@@ -47,8 +47,12 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public News geNewsForPublish() {
         News news = newsRepository.geNewsForPublish();
-        news.setPublished(true);
-        return newsRepository.save(news);
+        if (news != null) {
+            news.setPublished(true);
+            return newsRepository.save(news);
+        } else {
+            return null;
+        }
     }
 
     @Override

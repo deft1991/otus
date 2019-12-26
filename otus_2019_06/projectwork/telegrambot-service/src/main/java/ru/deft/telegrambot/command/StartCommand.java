@@ -11,24 +11,29 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.deft.telegrambot.model.telegramservice.Anonymous;
 import ru.deft.telegrambot.service.AnonymousService;
 
+import java.util.List;
+
 /*
  * Created by sgolitsyn on 11/22/19
  */
 @Slf4j
 @Component("StartCommand")
-public final class StartCommand extends AnonymizerCommand {
+public class StartCommand extends AnonymizerCommand {
 
     public static final String LOG_COMMAND_WITH_USER_ID_AND_COMMAND_IDENTIFIER = "Start execute command: %s, userId: %s, commandIdentifier: %s";
 
 
     private final AnonymousService mAnonymouses;
+    private final List<Chat> chats;
 
     // обязательно нужно вызвать конструктор суперкласса,
     // передав в него имя и описание команды
     @Autowired
-    public StartCommand(@Qualifier("AnonymousService") AnonymousService anonymouses) {
+    public StartCommand(@Qualifier("AnonymousService") AnonymousService anonymouses
+            , @Qualifier("chats") List<Chat> chats) {
         super("start", "start using bot\n");
-        mAnonymouses = anonymouses;
+        this.mAnonymouses = anonymouses;
+        this.chats = chats;
     }
 
     /**
@@ -58,6 +63,7 @@ public final class StartCommand extends AnonymizerCommand {
             sb.append("You've already started bot! You can send messages if you set your name (/set_name).");
         }
 
+        chats.add(chat);
         message.setText(sb.toString());
         execute(absSender, message, user);
     }

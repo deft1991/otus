@@ -68,6 +68,7 @@ public class NewsController {
     }
 
     @PutMapping("/publish")
+    @ResponseBody
     public News geNewsForPublish() {
         return newsService.geNewsForPublish();
     }

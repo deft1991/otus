@@ -20,7 +20,7 @@ import java.util.Base64;
  */
 @Slf4j
 @Component("SetNameCommand")
-public final class SetNameCommand extends AnonymizerCommand {
+public class SetNameCommand extends AnonymizerCommand {
 
     public static final String LOG_COMMAND_WITH_USER_ID_AND_COMMAND_IDENTIFIER = "Start execute command %s : %s, userId: %s, commandIdentifier: %s";
     private final AnonymousService anonymousService;

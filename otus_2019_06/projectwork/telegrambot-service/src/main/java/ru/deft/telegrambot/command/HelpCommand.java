@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
  * Created by sgolitsyn on 11/22/19
  */
 @Slf4j
-public final class HelpCommand extends AnonymizerCommand {
+public class HelpCommand extends AnonymizerCommand {
 
     public static final String LOG_HELP_COMMAND = "HelpCommand with user: id = %s name = %s, commandIdentifier: %s";
     private final ICommandRegistry mCommandRegistry;

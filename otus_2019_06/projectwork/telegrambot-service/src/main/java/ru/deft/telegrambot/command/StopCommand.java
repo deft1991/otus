@@ -15,7 +15,9 @@ import ru.deft.telegrambot.service.AnonymousService;
  */
 @Slf4j
 @Component("StopCommand")
-public final class StopCommand extends AnonymizerCommand {
+public class StopCommand extends AnonymizerCommand {
+
+    public static final String LOG_COMMAND_WITH_USER_ID_AND_COMMAND_IDENTIFIER = "Start execute command: %s, userId: %s, commandIdentifier: %s";
 
     private final AnonymousService mAnonymouses;
 
@@ -28,7 +30,7 @@ public final class StopCommand extends AnonymizerCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
 
-//        log.info(LogTemplate.COMMAND_PROCESSING.getTemplate(), user.getId(), getCommandIdentifier());
+        log.info(String.format(LOG_COMMAND_WITH_USER_ID_AND_COMMAND_IDENTIFIER, "StartCommand", user.getId(), getCommandIdentifier()));
 
         StringBuilder sb = new StringBuilder();
 
@@ -39,7 +41,7 @@ public final class StopCommand extends AnonymizerCommand {
             log.info("User {} has been removed from users list!", user.getId());
             sb.append("You've been removed from bot's users list! Bye!");
         } else {
-//            log.log(Level.getLevel(LogLevel.STRANGE.getValue()), "User {} is trying to execute '{}' without having executed 'start' before!", user.getId(), getCommandIdentifier());
+            log.info(String.format("User id = %s is trying to execute '%s' without having executed 'start' before!", user.getId(), getCommandIdentifier()));
             sb.append("You were not in bot users' list. Bye!");
         }
 

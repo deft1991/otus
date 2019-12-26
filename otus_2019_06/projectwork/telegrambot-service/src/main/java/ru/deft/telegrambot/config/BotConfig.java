@@ -12,6 +12,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.ApiContext;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableConfigurationProperties
@@ -22,11 +26,7 @@ public class BotConfig {
 
     private String botName;
     private String botToken;
-
-//    @Bean("mAnonymouses")
-//    AnonymousService mAnonymouses() {
-//        return new AnonymousService();
-//    }
+    private List<Chat> chats;
 
     private static final String PROXY_HOST = "185.234.217.6";
     private static final int PROXY_PORT = 3128;
@@ -42,4 +42,10 @@ public class BotConfig {
         botOptions.setProxyType(PROXY_TYPE);
         return botOptions;
     }
+
+    @Bean("chats")
+    List<Chat> chats() {
+        return new ArrayList<Chat>();
+    }
+
 }
