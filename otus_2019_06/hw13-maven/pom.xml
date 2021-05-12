@@ -19,7 +19,7 @@
 <!--        <warSourceDirectory>${basedir}/src/main/resources</warSourceDirectory>-->
         <spring-data-jpa.version>2.1.9.RELEASE</spring-data-jpa.version>
         <!-- Spring -->
-        <org.springframework.version>5.1.6.RELEASE</org.springframework.version>
+        <org.springframework.version>5.2.10.RELEASE</org.springframework.version>
 
         <!-- persistence -->
         <hibernate.version>5.4.5.Final</hibernate.version>
