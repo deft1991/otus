@@ -28,7 +28,7 @@
         <tomcat-dbcp.version>9.0.1</tomcat-dbcp.version>
         <jta.version>1.1</jta.version>
         <querydsl.version>4.2.1</querydsl.version>
-        <h2.version>1.4.199</h2.version>
+        <h2.version>2.0.206</h2.version>
 
         <!-- -->
         <commons-lang3.version>3.9</commons-lang3.version>
